@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import * as qs from 'qs'
 @Injectable()
 export class AuthService {
@@ -11,7 +11,11 @@ export class AuthService {
     //   form: {
     //     grant_type: 'client_credentials'
     //   },
-    async login() {
+     getToken(): Observable<{
+        access_token: string,
+        expires_in: number,
+        token_type: string
+    }> {
         const data = qs.stringify({ 'grant_type' : 'client_credentials'})
         const response = this.httpServices.post('https://accounts.spotify.com/api/token', 
         data,
