@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs';
-
+import * as qs from 'qs'
 @Injectable()
 export class AuthService {
     constructor(private httpServices: HttpService) {}
@@ -12,14 +12,20 @@ export class AuthService {
     //     grant_type: 'client_credentials'
     //   },
     async login() {
-        const data = this.httpServices.post('https://accounts.spotify.com/api/token', {
-            "grant_type": "client_credentials"
-        }, {
+        const data = qs.stringify({ 'grant_type' : 'client_credentials'})
+        const response = this.httpServices.post('https://accounts.spotify.com/api/token', 
+        data,
+         {
             headers: {
-                'Authorization': 'Basic ' + (Buffer.from('492c7f8871b44434a229741f10363d69' + ':' + '157c818a52be4c698d1585676f14529f', 'base64')),
+                Accept: 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded'
-              }   
+              },
+              auth: {
+                username: process.env.CLIENT_ID,
+                password: process.env.CLIENT_SECRET
+
+              }  
         }).pipe((map((result) => result.data)))
-        console.log(data)
+        return response;
     }
 }
