@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
 import { GlobalHttpModule } from './http/http.module';
 import { MusicModule } from './music/music.module';
 
@@ -14,8 +13,7 @@ import { MusicModule } from './music/music.module';
     ConfigModule.forRoot({
     isGlobal: true
   }),
-  AuthModule,
-  MusicModule
+  MusicModule,
 ],
 })
 export class AppModule {}
