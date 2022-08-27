@@ -11,11 +11,7 @@ export class AuthService {
     //   form: {
     //     grant_type: 'client_credentials'
     //   },
-     getToken(): Observable<{
-        access_token: string,
-        expires_in: number,
-        token_type: string
-    }> {
+     getToken(): Observable<string> {
         const data = qs.stringify({ 'grant_type' : 'client_credentials'})
         const response = this.httpServices.post('https://accounts.spotify.com/api/token', 
         data,
@@ -30,6 +26,6 @@ export class AuthService {
 
               }  
         }).pipe((map((result) => result.data)))
-        return response;
-    }
+        return response.pipe(map((res) => res.access_token))
+      }
 }

@@ -3,14 +3,19 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { GlobalHttpModule } from './http/http.module';
+import { MusicModule } from './music/music.module';
 
 @Module({
   controllers: [AppController],
   providers: [AppService],
-  imports: [ConfigModule.forRoot({
+  imports: [
+    GlobalHttpModule,
+    ConfigModule.forRoot({
     isGlobal: true
   }),
-  AuthModule
+  AuthModule,
+  MusicModule
 ],
 })
 export class AppModule {}
