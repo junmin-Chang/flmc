@@ -4,8 +4,9 @@ import { MusicService } from './music.service';
 @Controller('music')
 export class MusicController {
     constructor(private musicServices: MusicService) {}
-    @Get(':musicId')
-    async getMusicById(@Param('musicId') musicId: string) {
-        return await this.musicServices.getMusicMyId(musicId)
+
+    @Get(':keyword')
+    async getMusicByKeyword(@Param('keyword') keyword: string) {
+        return await this.musicServices.getMusicByKeyword(keyword)
     }
 }
