@@ -7,7 +7,7 @@ const AuthRequired = createParamDecorator((_, context: ExecutionContext) => {
     const user = {
         userId: 'testUser',
         password: 'testPassword',
-        id: new ObjectId()
+        id: "630b08f6e68b919e2d2b82a5"
     }
     delete user.password;
     return user;

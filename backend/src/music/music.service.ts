@@ -38,7 +38,7 @@ export class MusicService {
         const isExists = await this.prismaServices.song.findFirst({
             where: {
                 songId,
-                user
+                userId: user.id
             }
         })
 
@@ -49,10 +49,11 @@ export class MusicService {
         const result = await this.prismaServices.song.create({
             data: {
                 ...musicRegisterDto,
-                userId: user.userId
+                user: {
+                    connect: { id: user.id }
+                }
             }
         })
-        delete user.userId
         return result;
     }
 }
