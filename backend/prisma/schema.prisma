@@ -27,6 +27,6 @@ model Song {
   title String
   image String
   singer String
-  userId String
-  user User? @relation(fields: [userId], references: [userId])
+  userId String @db.ObjectId
+  user User? @relation(fields: [userId], references: [id])
 }
