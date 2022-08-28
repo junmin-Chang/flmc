@@ -6,6 +6,6 @@ import { MusicService } from './music.service';
 
 @Module({
   controllers: [MusicController],
-  providers: [MusicService, TokenService, PrismaService]
+  providers: [MusicService, TokenService, PrismaService],
 })
 export class MusicModule {}
