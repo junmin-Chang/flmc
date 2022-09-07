@@ -9,47 +9,47 @@ import { RegisterDto } from './dto/register-user.dto';
 
 @Injectable()
 export class AuthService {
-    constructor(
-        private readonly prismaServices: PrismaService,
-        private jwtService: JwtService,
-        private readonly userServices: UserService,
-        private readonly passwordServices: PasswordService
-    ) {}
+  constructor(
+    private readonly prismaServices: PrismaService,
+    private jwtService: JwtService,
+    private readonly userServices: UserService,
+    private readonly passwordServices: PasswordService,
+  ) {}
 
-    async login(loginDto: LoginDto) : Promise<AuthResponse> {
-        const { userId, password } = loginDto;
-        const user = await this.prismaServices.user.findUnique({
-            where: { userId }
-        })
+  async login(loginDto: LoginDto): Promise<AuthResponse> {
+    const { userId, password } = loginDto;
+    const user = await this.prismaServices.user.findUnique({
+      where: { userId },
+    });
 
-        if (!user) {
-            throw new HttpException(
-                '존재하지 않는 유저',
-                HttpStatus.BAD_REQUEST
-            )
-        }
-        const validatePassword = await this.passwordServices.comparePassword(password, user.password)
-        if (!validatePassword) {
-            throw new HttpException('비밀번호가 틀림', HttpStatus.UNAUTHORIZED)
-        }
-        delete user.password
-        
-        return {
-            accessToken: await this.createAccessToken({ userId: user.userId }),
-            refreshToken: await this.createRefreshToken({ userId: user.userId }),
-            user
-        }        
+    if (!user) {
+      throw new HttpException('존재하지 않는 유저', HttpStatus.BAD_REQUEST);
     }
-    async register(registerUserDto: RegisterDto): Promise<AuthResponse> {
-        const user = await this.userServices.createUser(registerUserDto);
-        delete user.password;
-        return {
-          accessToken: await this.createAccessToken({ userId: user.userId }),
-          refreshToken: await this.createRefreshToken({ userId: user.userId }),
-          user,
-        };
-      }
-      
+    const validatePassword = await this.passwordServices.comparePassword(
+      password,
+      user.password,
+    );
+    if (!validatePassword) {
+      throw new HttpException('비밀번호가 틀림', HttpStatus.UNAUTHORIZED);
+    }
+    delete user.password;
+
+    return {
+      accessToken: await this.createAccessToken({ userId: user.userId }),
+      refreshToken: await this.createRefreshToken({ userId: user.userId }),
+      user,
+    };
+  }
+  async register(registerUserDto: RegisterDto): Promise<AuthResponse> {
+    const user = await this.userServices.createUser(registerUserDto);
+    delete user.password;
+    return {
+      accessToken: await this.createAccessToken({ userId: user.userId }),
+      refreshToken: await this.createRefreshToken({ userId: user.userId }),
+      user,
+    };
+  }
+
   async createAccessToken(payload: { userId: string }): Promise<any> {
     return this.jwtService.sign(payload);
   }
