@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { MusicResponseDto } from '../typings/music'
+import { MusicResponseDto } from '../../typings/music'
 
 export const musicApi = createApi({
     reducerPath: "musicApi",
