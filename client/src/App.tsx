@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useGetMusicByKeywordQuery } from './features/musicSlice';
+import { useGetMusicByKeywordQuery } from './features/music/musicSlice';
 import useDebounce from './hooks/useDebounce';
 import Home from './routes/Home';
 import Login from './routes/auth/Login';
