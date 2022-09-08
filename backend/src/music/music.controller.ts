@@ -7,16 +7,18 @@ import { MusicService } from './music.service';
 
 @Controller('music')
 export class MusicController {
-    constructor(private musicServices: MusicService) {}
+  constructor(private musicServices: MusicService) {}
 
-    @Get(':keyword')
-    async getMusicByKeyword(@Param('keyword') keyword: string) {
-        return await this.musicServices.getMusicByKeyword(keyword)
-    }
+  @Get(':keyword')
+  async getMusicByKeyword(@Param('keyword') keyword: string) {
+    return await this.musicServices.getMusicByKeyword(keyword);
+  }
 
-    
-    @Post('add')
-    async addMusic(@Body() musicRegisterDto: MusicRegisterDto, @AuthRequired() user: User) {
-        return await this.musicServices.addMusic(musicRegisterDto, user)
-    }
+  @Post('add')
+  async addMusic(
+    @Body() musicRegisterDto: MusicRegisterDto,
+    @AuthRequired() user: User,
+  ) {
+    return await this.musicServices.addMusic(musicRegisterDto, user);
+  }
 }

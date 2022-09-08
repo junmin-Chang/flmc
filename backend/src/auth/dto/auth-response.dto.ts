@@ -1,7 +1,7 @@
-import { User } from "@prisma/client";
+import { User } from '@prisma/client';
 
 export class AuthResponse {
-    refreshToken: string;
-    accessToken: string;
-    user: User;
+  refreshToken: string;
+  accessToken: string;
+  user: User;
 }

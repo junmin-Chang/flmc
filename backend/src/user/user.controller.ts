@@ -4,11 +4,10 @@ import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-    constructor(private readonly userServices: UserService) {}
+  constructor(private readonly userServices: UserService) {}
 
-
-    @Get(':id')
-    async getUserInfo(@Param(':id') userId: string): Promise<User> {
-        return this.userServices.getUserInfo({ userId })
-    } 
+  @Get(':id')
+  async getUserInfo(@Param(':id') userId: string): Promise<User> {
+    return this.userServices.getUserInfo({ userId });
+  }
 }

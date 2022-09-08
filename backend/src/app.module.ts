@@ -13,11 +13,11 @@ import { UserModule } from './user/user.module';
   imports: [
     GlobalHttpModule,
     ConfigModule.forRoot({
-    isGlobal: true
-  }),
-  MusicModule,
-  AuthModule,
-  UserModule,
-],
+      isGlobal: true,
+    }),
+    MusicModule,
+    AuthModule,
+    UserModule,
+  ],
 })
 export class AppModule {}
