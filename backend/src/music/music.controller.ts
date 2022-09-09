@@ -1,10 +1,11 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
-import { AuthGuard } from 'src/auth/auth.guard';
 import AuthRequired from '../common/decorators/auth.decorator';
 import { MusicRegisterDto } from './dto/music-register.dto';
 import { MusicService } from './music.service';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('music')
 export class MusicController {
   constructor(private musicServices: MusicService) {}
