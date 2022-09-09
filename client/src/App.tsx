@@ -6,6 +6,7 @@ import Home from './routes/Home';
 import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
 import AuthLayout from './routes/auth/AuthLayout';
+import Profile from './routes/profile/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
+        <Route path="/profile/:userId" element={<Profile />} />
       </Routes>
     </div>
   );
