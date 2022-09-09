@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         auth: "url('./assets/image/bg-auth.svg')",
+        profile: "url('./assets/image/bg-profile.svg')",
       },
     },
   },
