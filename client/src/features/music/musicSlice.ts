@@ -1,15 +1,16 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { MusicResponseDto } from '../../typings/music'
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { MusicResponseDto } from '../../typings/music';
+import { axiosInstance } from '../../utils/axios';
 
 export const musicApi = createApi({
-    reducerPath: "musicApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://3000-junminchang-flmc-wt69i20jmeb.ws-us63.gitpod.io/" }),
-    endpoints: (builder) => ({
-        getMusicByKeyword: builder.query<MusicResponseDto[], string>({
-            query: (keyword: string) => `/music/${encodeURI(encodeURIComponent(keyword))}`
-        })
-    })
-})
+  reducerPath: 'musicApi/search',
+  baseQuery: axiosInstance,
+  endpoints: (builder) => ({
+    getMusicByKeyword: builder.query<MusicResponseDto[], string>({
+      query: (keyword: string) =>
+        `/music/${encodeURI(encodeURIComponent(keyword))}`,
+    }),
+  }),
+});
 
-
-export const { useGetMusicByKeywordQuery } = musicApi
+export const { useGetMusicByKeywordQuery } = musicApi;
