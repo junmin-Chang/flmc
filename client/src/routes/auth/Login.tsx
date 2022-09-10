@@ -43,6 +43,7 @@ const Login = () => {
             </label>
             <input
               id="password"
+              type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
               placeholder="패스워드"
