@@ -7,10 +7,12 @@ import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
 import AuthLayout from './routes/auth/AuthLayout';
 import Profile from './routes/profile/Profile';
+import Nav from './components/common/Nav';
 
 function App() {
   return (
     <div className="w-full h-full">
+      <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<AuthLayout />}>
