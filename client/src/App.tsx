@@ -8,8 +8,11 @@ import Register from './routes/auth/Register';
 import AuthLayout from './routes/auth/AuthLayout';
 import Profile from './routes/profile/Profile';
 import Nav from './components/common/Nav';
+import { useAppSelector } from './store/hook';
+import Modal from './components/common/Modal';
 
 function App() {
+  const { isOpen } = useAppSelector((state) => state.modal);
   return (
     <div className="w-full h-full">
       <Nav />
@@ -21,6 +24,7 @@ function App() {
         </Route>
         <Route path="/profile/:userId" element={<Profile />} />
       </Routes>
+      {isOpen && <Modal />}
     </div>
   );
 }
