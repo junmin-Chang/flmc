@@ -3,10 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const PlaylistButton = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth.user);
+  const { playlist } = useAppSelector((state) => state.music);
   return (
     <div className="w-full px-4 py-2 flex flex-row gap-2 border-b-2 border-gray-400">
-      {user.playlist?.map((p: string, i: number) => (
+      {playlist?.map((p: string, i: number) => (
         <button
           key={i}
           className="p-2 bg-green-400 text-white rounded-md font-black"
