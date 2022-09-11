@@ -40,4 +40,21 @@ export class UserService {
     delete user.password;
     return user;
   }
+
+  async addPlaylist(playlist: string, user) {
+    const result = await this.prismaServices.user.update({
+      where: {
+        userId: user.userId,
+      },
+      data: {
+        playlist: {
+          push: playlist,
+        },
+      },
+    });
+
+    if (result) {
+      return playlist;
+    }
+  }
 }
