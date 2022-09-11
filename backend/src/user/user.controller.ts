@@ -8,9 +8,13 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userServices: UserService) {}
 
-  @Get(':id')
-  async getUserInfo(@Param(':id') userId: string): Promise<User> {
-    return this.userServices.getUserInfo({ userId });
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':userId')
+  async getUserInfo(
+    @Param('userId') userId: string,
+    @AuthRequired() user: User,
+  ) {
+    return await this.userServices.getUserInfo(userId, user);
   }
 
   @UseGuards(AuthGuard('jwt'))

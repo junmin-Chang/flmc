@@ -1,14 +1,16 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../features/auth/authSlice';
+import { getUserProfile, logout } from '../../features/user/userSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const Nav = () => {
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.auth);
+  const { isLoggedIn, userInfo } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+
   return (
     <div className="w-full h-[60px] flex flex-row p-4 bg-transparent">
-      {user ? (
+      {isLoggedIn ? (
         <div className="flex flex-row gap-4 ml-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +20,7 @@ const Nav = () => {
             stroke="currentColor"
             className="w-6 h-6 text-white"
             onClick={() => {
-              navigate(`/profile/${user?.user.userId}`);
+              navigate(`/profile/${userInfo?.userId}`);
             }}
           >
             <path

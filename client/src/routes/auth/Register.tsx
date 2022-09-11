@@ -1,12 +1,12 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { register } from '../../features/auth/authSlice';
+import { register } from '../../features/user/userSlice';
 import { useAppDispatch } from '../../store/hook';
 import { RegisterDto } from '../../typings/auth';
 
 const Register = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -17,10 +17,12 @@ const Register = () => {
       dispatch(
         register({
           ...values,
-        })
-      ).unwrap().then(() => {
-        navigate("/auth/login")
-      })
+        }),
+      )
+        .unwrap()
+        .then(() => {
+          navigate('/auth/login');
+        });
     },
   });
   return (

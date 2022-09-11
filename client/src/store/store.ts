@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { musicApi } from '../features/music/musicSlice';
-import authReducer from '../features/auth/authSlice';
+import userSlice from '../features/user/userSlice';
 import modalReducer from '../features/modal/modalSlice';
 import musicReducer from '../features/music/musicSlice';
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    user: userSlice,
     music: musicReducer,
     modal: modalReducer,
     [musicApi.reducerPath]: musicApi.reducer,

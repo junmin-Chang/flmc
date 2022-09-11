@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../features/auth/authSlice';
+import { login } from '../../features/user/userSlice';
 import { useAppDispatch } from '../../store/hook';
 import { LoginDto } from '../../typings/auth';
 

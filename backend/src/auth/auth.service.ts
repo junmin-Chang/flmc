@@ -37,7 +37,7 @@ export class AuthService {
     return {
       accessToken: await this.createAccessToken({ userId: user.userId }),
       refreshToken: await this.createRefreshToken({ userId: user.userId }),
-      user,
+      userInfo: user,
     };
   }
   async register(registerUserDto: RegisterDto): Promise<AuthResponse> {
@@ -46,7 +46,7 @@ export class AuthService {
     return {
       accessToken: await this.createAccessToken({ userId: user.userId }),
       refreshToken: await this.createRefreshToken({ userId: user.userId }),
-      user,
+      userInfo: user,
     };
   }
 
