@@ -1,11 +1,13 @@
 import { show } from '../../features/modal/modalSlice';
-import { useAppDispatch } from '../../store/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { User, UserInfo } from '../../typings/auth';
-
+import { Link } from 'react-router-dom';
 const PlaylistButton = ({
   playlist,
   isAdmin,
+  userId,
 }: {
+  userId: string | undefined;
   playlist: string[] | undefined;
   isAdmin: boolean | undefined;
 }) => {
@@ -13,12 +15,13 @@ const PlaylistButton = ({
   return (
     <div className="w-full px-4 py-2 flex flex-row gap-2">
       {playlist?.slice(0, 3).map((p: string, i: number) => (
-        <button
+        <Link
+          to={`/profile/${userId}/${p}`}
           key={i}
           className="p-2 bg-green-400 text-white rounded-md font-black"
         >
           {p}
-        </button>
+        </Link>
       ))}
       {isAdmin && (
         <button

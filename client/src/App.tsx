@@ -10,6 +10,7 @@ import Profile from './routes/profile/Profile';
 import Nav from './components/common/Nav';
 import { useAppSelector } from './store/hook';
 import Modal from './components/common/Modal';
+import Playlist from './routes/profile/Playlist';
 
 function App() {
   const { isOpen } = useAppSelector((state) => state.modal);
@@ -22,7 +23,9 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
-        <Route path="/profile/:userId" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />}>
+          <Route path=":playlist" element={<Playlist/>}/>
+        </Route>
       </Routes>
       {isOpen && <Modal />}
     </div>
