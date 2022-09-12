@@ -12,7 +12,6 @@ export class UserService {
 
   async getUserInfo(userId: string, user: User) {
     const isAdmin = userId === user.userId;
-    console.log('userId', userId);
     const userToGet = await this.prismaServices.user.findUnique({
       where: {
         userId: userId,
