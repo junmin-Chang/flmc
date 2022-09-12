@@ -12,14 +12,21 @@ export class MusicController {
 
   @Get(':keyword')
   async getMusicByKeyword(@Param('keyword') keyword: string) {
-    return await this.musicServices.getMusicByKeyword(keyword);
+    return await this.musicServices.getSongsByKeyword(keyword);
   }
 
+  @Get(':userId/:playlist')
+  async getSongsByPlaylist(
+    @Param('userId') userId: string,
+    @Param('playlist') playlist: string,
+  ) {
+    return await this.musicServices.getSongsByPlaylist(playlist, userId);
+  }
   @Post('add')
   async addMusic(
     @Body() musicRegisterDto: MusicRegisterDto,
     @AuthRequired() user: User,
   ) {
-    return await this.musicServices.addMusic(musicRegisterDto, user);
+    return await this.musicServices.addSong(musicRegisterDto, user);
   }
 }

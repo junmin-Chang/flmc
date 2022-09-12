@@ -25,7 +25,7 @@ export class MusicService {
     return data;
   }
 
-  async getMusicByKeyword(keyword: string) {
+  async getSongsByKeyword(keyword: string) {
     const token = await lastValueFrom(this.tokenServices.getToken());
     const { data } = await lastValueFrom(
       this.httpServices.get(
@@ -40,7 +40,7 @@ export class MusicService {
     return data.tracks.items;
   }
 
-  async addMusic(musicRegisterDto, user: User) {
+  async addSong(musicRegisterDto, user: User) {
     const { songId } = musicRegisterDto;
     const isExists = await this.prismaServices.song.findFirst({
       where: {
@@ -62,5 +62,15 @@ export class MusicService {
       },
     });
     return result;
+  }
+
+  async getSongsByPlaylist(playlist: string, userId: string) {
+    const songsToGet = await this.prismaServices.song.findMany({
+      where: {
+        userId,
+        playlist,
+      },
+    });
+    return songsToGet;
   }
 }
