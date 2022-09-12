@@ -9,16 +9,17 @@ export interface LoginDto {
   password: string;
 }
 
+export interface UserInfo {
+  username: string;
+  userId: string;
+  playlist: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  isAdmin: boolean;
+}
 export interface User {
   isLoggedIn: boolean;
   accessToken: string | null;
   refreshToken: string | null;
-  userInfo: {
-    username: string;
-    userId: string;
-    playlist: string[];
-    createdAt: Date;
-    updatedAt: Date;
-    isAdmin: boolean;
-  } | null;
+  userInfo: UserInfo;
 }

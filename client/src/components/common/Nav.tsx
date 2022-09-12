@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserProfile, logout } from '../../features/user/userSlice';
+import {  logout } from '../../features/user/userSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const Nav = () => {

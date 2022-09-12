@@ -1,22 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Skeleton from '../../components/common/SkeletonPlaylist';
 import PlaylistButton from '../../components/profile/PlaylistButton';
-import { useGetMusicByKeywordQuery } from '../../features/music/musicSlice';
-import { getUserProfile } from '../../features/user/userSlice';
-import useDebounce from '../../hooks/useDebounce';
-import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { useGetUserInfoByIdQuery } from '../../features/user/userSlice';
 
 const Profile = () => {
   const { userId } = useParams();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getUserProfile(userId as string));
-  }, [dispatch, userId]);
+  const { isLoading, data: userInfo } = useGetUserInfoByIdQuery(
+    userId as string,
+    {
+      skip: userId === undefined,
+      refetchOnMountOrArgChange: true,
+    },
+  );
+
   return (
     <div className="w-full h-full flex flex-col bg-profile">
       <h2 className="text-white text-4xl font-black p-8">{userId} 님.</h2>
-      <PlaylistButton />
+      {isLoading && <Skeleton />}
+      {!isLoading && (
+        <PlaylistButton
+          isAdmin={userInfo?.isAdmin}
+          playlist={userInfo?.playlist}
+        />
+      )}
     </div>
   );
 };

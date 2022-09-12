@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import userService from '../../services/user/userService';
 import { RootState } from '../../store/store';
-import { LoginDto, RegisterDto, User } from '../../typings/auth';
+import { LoginDto, RegisterDto, User, UserInfo } from '../../typings/auth';
+import { axiosInstance } from '../../utils/axios';
 
 export const register = createAsyncThunk(
-  'auth/register',
+  'user/register',
   async ({ username, userId, password }: RegisterDto, thunkApi) => {
     try {
       const { data } = await userService.register({
@@ -20,7 +22,7 @@ export const register = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-  'auth/login',
+  'user/login',
   async ({ userId, password }: LoginDto, thunkApi) => {
     try {
       const { data } = await userService.login({ userId, password });
@@ -44,12 +46,12 @@ export const login = createAsyncThunk(
   },
 );
 
-export const logout = createAsyncThunk('auth/logout', () => {
+export const logout = createAsyncThunk('user/logout', () => {
   userService.logout();
 });
 
 export const refreshToken = createAsyncThunk(
-  'auth/refreshToken',
+  'user/refreshToken',
   async (_, thunkApi) => {
     const { user } = thunkApi.getState() as RootState;
     if (user.refreshToken) {
@@ -63,38 +65,28 @@ export const refreshToken = createAsyncThunk(
   },
 );
 
-export const getUserProfile = createAsyncThunk(
-  'auth/getUserProfile',
-  async (userId: string, thunkApi) => {
+export const addPlaylist = createAsyncThunk(
+  'music/playlist',
+  async (playlist: string, thunkApi) => {
     try {
-      const { data } = await userService.getUserProfile(userId);
-      console.log(data);
-      return {
-        user: data,
-      };
+      const response = await userService.addPlaylist(playlist);
+      if (response) {
+        return response;
+      }
     } catch (error: any) {
-      thunkApi.rejectWithValue(error.response.data.message);
+      return thunkApi.rejectWithValue(error.response.data.message);
     }
   },
 );
 
-const userData = localStorage.getItem('auth');
-const userToken = userData && JSON.parse(userData);
-const initialState: User = userToken
-  ? {
-      isLoggedIn: true,
-      accessToken: userToken.accessToken,
-      refreshToken: userToken.refreshToken,
-      userInfo: null,
-    }
-  : {
-      isLoggedIn: false,
-      accessToken: null,
-      refreshToken: null,
-      userInfo: null,
-    };
+const initialState: User = {
+  isLoggedIn: false,
+  accessToken: null,
+  refreshToken: null,
+  userInfo: null,
+};
 
-const authSlice = createSlice({
+const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
@@ -129,15 +121,22 @@ const authSlice = createSlice({
       state.accessToken = action.payload?.accessToken;
       state.refreshToken = action.payload?.refreshToken;
     });
-    builder.addCase(getUserProfile.fulfilled, (state, action) => {
-      if (action.payload?.user !== '') {
-        state.userInfo = action.payload?.user;
-      } else {
-        history.back()
-      }
+    builder.addCase(addPlaylist.fulfilled, (state, action) => {
+      state.userInfo!.playlist = [...state.userInfo!.playlist, action.payload];
     });
   },
 });
 
-const { reducer } = authSlice;
+export const userApi = createApi({
+  reducerPath: 'userApi/search',
+  baseQuery: axiosInstance,
+  endpoints: (builder) => ({
+    getUserInfoById: builder.query<UserInfo, string>({
+      query: (userId: string) => `/user/${userId}`,
+    }),
+  }),
+});
+
+export const { useGetUserInfoByIdQuery } = userApi;
+const { reducer } = userSlice;
 export default reducer;

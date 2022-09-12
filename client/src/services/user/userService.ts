@@ -27,8 +27,11 @@ const refresh = async (refreshToken: string) => {
   });
 };
 
-const getUserProfile = async (userId: string) => {
-  return await axiosInstance.get(`/user/${userId}`);
+const addPlaylist = async (playlist: string) => {
+  const response = await axiosInstance.post('/user/playlist', {
+    playlist,
+  });
+  return response.data;
 };
 
 const userService = {
@@ -36,7 +39,7 @@ const userService = {
   login,
   logout,
   refresh,
-  getUserProfile,
+  addPlaylist,
 };
 
 export default userService;

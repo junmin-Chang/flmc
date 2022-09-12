@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { ChangeEvent, useCallback } from 'react';
 import { hide } from '../../features/modal/modalSlice';
-import { addPlaylist } from '../../features/music/musicSlice';
+import { addPlaylist } from '../../features/user/userSlice';
 import { useAppDispatch } from '../../store/hook';
 
 const Modal = () => {

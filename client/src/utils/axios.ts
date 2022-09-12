@@ -4,9 +4,6 @@ import { refreshToken } from '../features/user/userSlice';
 import { store } from '../store/store';
 export const axiosInstance = axios.create({
   baseURL: 'https://3000-junminchang-flmc-wt69i20jmeb.ws-us64.gitpod.io/',
-  headers: {
-    authorization: `Bearer ${JSON.parse(localStorage.getItem('auth'))}`,
-  },
 });
 
 export const setUpInterceptor = (store: any) => {
