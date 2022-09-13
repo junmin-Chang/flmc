@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { refreshToken } from '../features/user/userSlice';
 import { store } from '../store/store';
 export const axiosInstance = axios.create({
-  baseURL: 'https://3000-junminchang-flmc-wt69i20jmeb.ws-us64.gitpod.io/',
+  baseURL: 'https://3000-junminchang-flmc-gy2vi9wqqpk.ws-us65.gitpod.io/',
 });
 
 export const setUpInterceptor = (store: any) => {
