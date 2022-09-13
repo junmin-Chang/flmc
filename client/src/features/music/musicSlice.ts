@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import musicService from '../../services/music/musicService';
-import { MusicResponseDto } from '../../typings/music';
+import { AddMusicDto, MusicResponseDto } from '../../typings/music';
 import { axiosInstance } from '../../utils/axios';
 
 export const musicApi = createApi({
@@ -30,13 +30,7 @@ export const addMusic = createAsyncThunk(
     songId,
     singer,
     playlist,
-  }: {
-    title: string;
-    image: string;
-    songId: string;
-    singer: string;
-    playlist: string;
-  }) => {
+  }: AddMusicDto) => {
     const response = await musicService.addMusic({
       title,
       image,

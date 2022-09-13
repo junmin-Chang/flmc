@@ -1,3 +1,4 @@
+import { AddMusicDto } from '../../typings/music';
 import { axiosInstance } from '../../utils/axios';
 
 const addMusic = async ({
@@ -6,13 +7,7 @@ const addMusic = async ({
   songId,
   singer,
   playlist,
-}: {
-  title: string;
-  image: string;
-  songId: string;
-  singer: string;
-  playlist: string;
-}) => {
+}: AddMusicDto) => {
   const response = await axiosInstance.post('/music/add', {
     title,
     image,
