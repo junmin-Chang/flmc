@@ -57,20 +57,21 @@ export class MusicService {
       data: {
         ...musicRegisterDto,
         user: {
-          connect: { id: user.id },
+          connect: { userId: user.userId },
         },
       },
     });
     return result;
   }
 
-  async getSongsByPlaylist(playlist: string, userId: string) {
+  async getSongsByPlaylist(userId: string, playlist: string) {
     const songsToGet = await this.prismaServices.song.findMany({
       where: {
         userId,
         playlist,
       },
     });
+    console.log('songsToGet', songsToGet);
     return songsToGet;
   }
 }

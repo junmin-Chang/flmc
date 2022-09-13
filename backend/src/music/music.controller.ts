@@ -20,7 +20,7 @@ export class MusicController {
     @Param('userId') userId: string,
     @Param('playlist') playlist: string,
   ) {
-    return await this.musicServices.getSongsByPlaylist(playlist, userId);
+    return await this.musicServices.getSongsByPlaylist(userId, playlist);
   }
   @Post('add')
   async addMusic(

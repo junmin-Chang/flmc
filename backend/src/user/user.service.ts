@@ -10,8 +10,7 @@ export class UserService {
     private passwordServices: PasswordService,
   ) {}
 
-  async getUserInfo(userId: string, user: User) {
-    const isAdmin = userId === user.userId;
+  async getUserInfo(userId: string) {
     const userToGet = await this.prismaServices.user.findUnique({
       where: {
         userId: userId,
@@ -21,10 +20,7 @@ export class UserService {
     if (!userToGet) return null;
 
     delete userToGet.password;
-    return {
-      ...userToGet,
-      isAdmin,
-    };
+    return userToGet;
   }
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {

@@ -15,11 +15,10 @@ export interface UserInfo {
   playlist: string[];
   createdAt: Date;
   updatedAt: Date;
-  isAdmin: boolean;
 }
 export interface User {
   isLoggedIn: boolean;
   accessToken: string | null;
   refreshToken: string | null;
-  userInfo: UserInfo;
+  userInfo: UserInfo | null;
 }

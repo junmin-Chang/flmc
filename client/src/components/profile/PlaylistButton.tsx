@@ -4,13 +4,12 @@ import { User, UserInfo } from '../../typings/auth';
 import { Link } from 'react-router-dom';
 const PlaylistButton = ({
   playlist,
-  isAdmin,
   userId,
 }: {
   userId: string | undefined;
   playlist: string[] | undefined;
-  isAdmin: boolean | undefined;
 }) => {
+  const { userInfo: loggedInUserId } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   return (
     <div className="w-full px-4 py-2 flex flex-row gap-2">
@@ -23,7 +22,7 @@ const PlaylistButton = ({
           {p}
         </Link>
       ))}
-      {isAdmin && (
+      {userId === loggedInUserId?.userId && (
         <button
           className="p-2 bg-green-400 text-white rounded-md"
           onClick={() => {

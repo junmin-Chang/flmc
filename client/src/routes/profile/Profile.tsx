@@ -21,7 +21,6 @@ const Profile = () => {
       {!isLoading && (
         <PlaylistButton
           userId={userInfo?.userId}
-          isAdmin={userInfo?.isAdmin}
           playlist={userInfo?.playlist}
         />
       )}
