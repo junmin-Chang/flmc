@@ -18,4 +18,5 @@ export interface MusicResponseDto {
   artists: {
     name: string;
   }[];
+  id: string;
 }
