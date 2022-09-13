@@ -4,7 +4,11 @@ const SkeletonList = ({ numberToRender }: { numberToRender: number }) => {
       {Array(numberToRender)
         .fill(1)
         .map((s, i) => (
-          <div role="status" className="space-y-2.5 animate-pulse max-w-lg">
+          <div
+            role="status"
+            className="space-y-2.5 animate-pulse max-w-lg"
+            key={i}
+          >
             <div className="flex items-center space-x-2 w-full">
               <div className="h-4 bg-gray-600 rounded-full w-32"></div>
               <div className="h-4 bg-gray-700 rounded-full w-24"></div>

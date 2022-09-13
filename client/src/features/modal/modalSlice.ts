@@ -3,18 +3,30 @@ import { createSlice } from '@reduxjs/toolkit';
 const modalSlice = createSlice({
   name: 'modal',
   initialState: {
+    mode: '',
     isOpen: false,
   },
   reducers: {
-    show: (state) => {
+    showAddPlaylist: (state) => {
       state.isOpen = true;
+      state.mode = 'playlist';
     },
-    hide: (state) => {
+    hideAddPlaylist: (state) => {
       state.isOpen = false;
+      state.mode = 'playlist';
+    },
+    showAddMusic: (state) => {
+      state.isOpen = true;
+      state.mode = 'music';
+    },
+    hideAddMusic: (state) => {
+      state.isOpen = false;
+      state.mode = 'music';
     },
   },
 });
 
 const { reducer } = modalSlice;
 export default reducer;
-export const { show, hide } = modalSlice.actions;
+export const { showAddMusic, showAddPlaylist, hideAddMusic, hideAddPlaylist } =
+  modalSlice.actions;

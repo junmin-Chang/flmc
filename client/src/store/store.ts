@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { musicApi } from '../features/music/musicSlice';
 import userReducer, { userApi } from '../features/user/userSlice';
+import musicReducer from '../features/music/musicSlice';
 import modalReducer from '../features/modal/modalSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
@@ -9,6 +10,7 @@ import { persistReducer } from 'redux-persist';
 const rootReducer = combineReducers({
   user: userReducer,
   modal: modalReducer,
+  music: musicReducer,
   [userApi.reducerPath]: userApi.reducer,
   [musicApi.reducerPath]: musicApi.reducer,
 });

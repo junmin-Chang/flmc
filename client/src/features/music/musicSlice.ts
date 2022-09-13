@@ -24,13 +24,7 @@ export const musicApi = createApi({
 
 export const addMusic = createAsyncThunk(
   'music/add',
-  async ({
-    title,
-    image,
-    songId,
-    singer,
-    playlist,
-  }: AddMusicDto) => {
+  async ({ title, image, songId, singer, playlist }: AddMusicDto) => {
     const response = await musicService.addMusic({
       title,
       image,
@@ -41,13 +35,23 @@ export const addMusic = createAsyncThunk(
     return { song: response };
   },
 );
-const initialState: { songs: any[] } = {
+const initialState: { songs: any[]; selectedSong: AddMusicDto } = {
+  selectedSong: {
+    songId: '',
+    title: '',
+    singer: '',
+    image: '',
+  },
   songs: [],
 };
 export const musicSlice = createSlice({
   name: 'music',
   initialState,
-  reducers: {},
+  reducers: {
+    selectMusic: (state, action) => {
+      state.selectedSong = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addMusic.fulfilled, (state, action) => {
       state.songs = [...state.songs, action.payload.song];
@@ -55,5 +59,8 @@ export const musicSlice = createSlice({
   },
 });
 
+const { reducer } = musicSlice;
 export const { useGetMusicByKeywordQuery, useGetMusicByPlaylistQuery } =
   musicApi;
+export const { selectMusic } = musicSlice.actions;
+export default reducer;

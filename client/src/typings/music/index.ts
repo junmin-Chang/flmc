@@ -3,7 +3,7 @@ export interface AddMusicDto {
   title: string;
   image: string;
   singer: string;
-  playlist: string;
+  playlist?: string;
 }
 
 export interface MusicResponseDto {

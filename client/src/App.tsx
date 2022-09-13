@@ -1,7 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useGetMusicByKeywordQuery } from './features/music/musicSlice';
-import useDebounce from './hooks/useDebounce';
 import Home from './routes/Home';
 import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
@@ -12,9 +9,10 @@ import { useAppSelector } from './store/hook';
 import Modal from './components/common/Modal';
 import Playlist from './routes/profile/Playlist';
 import MusicSearch from './routes/music/MusicSearch';
+import AddMusic from './components/music/AddModal';
 
 function App() {
-  const { isOpen } = useAppSelector((state) => state.modal);
+  const { isOpen, mode } = useAppSelector((state) => state.modal);
   return (
     <div className="w-full h-full">
       <Nav />
@@ -29,7 +27,8 @@ function App() {
         </Route>
         <Route path="/music/add" element={<MusicSearch />} />
       </Routes>
-      {isOpen && <Modal />}
+      {isOpen && mode === 'playlist' && <Modal />}
+      {isOpen && mode === 'music' && <AddMusic />}
     </div>
   );
 }

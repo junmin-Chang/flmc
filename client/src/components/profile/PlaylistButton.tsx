@@ -1,6 +1,5 @@
-import { show } from '../../features/modal/modalSlice';
+import { showAddPlaylist } from '../../features/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { User, UserInfo } from '../../typings/auth';
 import { Link } from 'react-router-dom';
 const PlaylistButton = ({
   playlist,
@@ -26,7 +25,7 @@ const PlaylistButton = ({
         <button
           className="p-2 bg-green-400 text-white rounded-md"
           onClick={() => {
-            dispatch(show());
+            dispatch(showAddPlaylist());
           }}
         >
           <svg
