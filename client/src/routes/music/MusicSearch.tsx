@@ -1,11 +1,13 @@
 import { ChangeEvent, useCallback, useState } from 'react';
+import SkeletonList from '../../components/common/SkeletonList';
+import MusicList from '../../components/music/MusicList';
 import { useGetMusicByKeywordQuery } from '../../features/music/musicSlice';
 import useDebounce from '../../hooks/useDebounce';
 
 const MusicSearch = () => {
   const [value, setValue] = useState('');
   const keyword = useDebounce(value, 500);
-  const { data, isLoading } = useGetMusicByKeywordQuery(keyword, {
+  const { data: songs, isLoading } = useGetMusicByKeywordQuery(keyword, {
     skip: value.trim().length === 0,
   });
   const onChangeKeyword = useCallback(
@@ -22,16 +24,23 @@ const MusicSearch = () => {
           onChange={onChangeKeyword}
           value={value}
         />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6 text-white absolute right-10"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          />
+        </svg>
       </div>
-      {isLoading && <p className="text-white">LOADING</p>}
-      {data &&
-        data.map((d, i) => {
-          return (
-            <p className="text-white" key={i}>
-              {d.name}
-            </p>
-          );
-        })}
+      {isLoading && <SkeletonList numberToRender={4} />}
+      {songs && <MusicList songs={songs} />}
     </div>
   );
 };

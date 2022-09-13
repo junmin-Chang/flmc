@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import NotFound from '../../components/profile/NotFound';
 import {
   addMusic,
   useGetMusicByPlaylistQuery,
@@ -30,43 +31,15 @@ const Playlist = () => {
     <div className="bg-black w-full h-full flex flex-col p-8">
       {isLoading && <p className="text-white">LOADING...</p>}
       {data && data.length === 0 && (
-        <form onSubmit={formik.handleSubmit}>
-          <p className="text-white">EMPTY</p>
-          <input
-            className="text-black"
-            id="title"
-            onChange={formik.handleChange}
-            value={formik.values.title}
-          />
-
-          <input
-            className="text-black"
-            id="image"
-            onChange={formik.handleChange}
-            value={formik.values.image}
-          />
-          <input
-            className="text-black"
-            id="songId"
-            onChange={formik.handleChange}
-            value={formik.values.songId}
-          />
-          <input
-            className="text-black"
-            id="singer"
-            onChange={formik.handleChange}
-            value={formik.values.singer}
-          />
-          <input
-            className="text-black"
-            id="playlist"
-            onChange={formik.handleChange}
-            value={formik.values.playlist}
-          />
-          <button className="bg-white" type="submit">
-            ADD
-          </button>
-        </form>
+        <div className="flex flex-col items-center">
+          <NotFound className="w-full" />
+          <Link
+            className="bg-green-400 text-white font-bold p-4 rounded-xl text-center"
+            to="/music/add"
+          >
+            음악 추가
+          </Link>
+        </div>
       )}
     </div>
   );
