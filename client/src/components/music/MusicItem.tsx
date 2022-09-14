@@ -20,10 +20,10 @@ const MusicItem = ({ name, album, artists, id }: MusicResponseDto) => {
           dispatch(showAddMusic());
           dispatch(
             selectMusic({
-              name,
-              album,
-              artists,
-              id,
+              title: name,
+              image: album.images[0].url,
+              singer: artists[0].name,
+              songId: id,
             }),
           );
         }}
