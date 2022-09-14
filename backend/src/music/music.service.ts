@@ -68,10 +68,9 @@ export class MusicService {
     const songsToGet = await this.prismaServices.song.findMany({
       where: {
         userId,
-        playlist,
+        playlist: decodeURI(decodeURIComponent(playlist)),
       },
     });
-    console.log('songsToGet', songsToGet);
     return songsToGet;
   }
 }
