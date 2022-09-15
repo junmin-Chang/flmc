@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import musicService from '../../services/music/musicService';
-import { AddMusicDto, MusicResponseDto } from '../../typings/music';
+import { AddMusicDto, MusicResponseDto, ProfileMusicResponseDto } from '../../typings/music';
 import { axiosInstance } from '../../utils/axios';
 
 export const musicApi = createApi({
@@ -13,7 +13,7 @@ export const musicApi = createApi({
         `/music/${encodeURI(encodeURIComponent(keyword))}`,
     }),
     getMusicByPlaylist: builder.query<
-      MusicResponseDto[] | null,
+      ProfileMusicResponseDto[] | null,
       { userId: string | undefined; playlist: string | undefined }
     >({
       query: ({ userId, playlist }: { userId: string; playlist: string }) =>

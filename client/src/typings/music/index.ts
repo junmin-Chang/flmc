@@ -20,3 +20,10 @@ export interface MusicResponseDto {
   }[];
   id: string;
 }
+
+export interface ProfileMusicResponseDto {
+  title: string;
+  image: string;
+  id: string;
+  singer: string;
+}
