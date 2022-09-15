@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
 import { Link, useParams } from 'react-router-dom';
+import SkeletonList from '../../components/common/SkeletonList';
+import MusicList from '../../components/profile/MusicList';
 import NotFound from '../../components/profile/NotFound';
 import {
   addMusic,
@@ -26,11 +28,14 @@ const Playlist = () => {
     },
   });
   const { userId, playlist } = useParams();
-  const { isLoading, data } = useGetMusicByPlaylistQuery({ userId, playlist });
+  const { isLoading, data: songs } = useGetMusicByPlaylistQuery({
+    userId,
+    playlist,
+  });
   return (
     <div className="bg-black w-full h-full flex flex-col p-8">
-      {isLoading && <p className="text-white">LOADING...</p>}
-      {data && data.length === 0 && (
+      {isLoading && <SkeletonList numberToRender={3} />}
+      {songs && songs.length === 0 && (
         <div className="flex flex-col items-center">
           <NotFound className="w-full" />
           <Link
@@ -41,6 +46,7 @@ const Playlist = () => {
           </Link>
         </div>
       )}
+      {songs && <MusicList songs={songs} />}
     </div>
   );
 };
