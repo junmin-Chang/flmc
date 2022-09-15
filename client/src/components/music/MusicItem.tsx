@@ -1,9 +1,9 @@
 import { showAddMusic } from '../../features/modal/modalSlice';
 import { selectMusic } from '../../features/music/musicSlice';
 import { useAppDispatch } from '../../store/hook';
-import { MusicResponseDto } from '../../typings/music';
+import { MusicSearchResponseDto } from '../../typings/music';
 
-const MusicItem = ({ name, album, artists, id }: MusicResponseDto) => {
+const MusicItem = ({ name, album, artists, id }: MusicSearchResponseDto) => {
   const dispatch = useAppDispatch();
 
   return (

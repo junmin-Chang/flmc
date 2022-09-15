@@ -1,7 +1,7 @@
-import { MusicResponseDto } from '../../typings/music';
+import { MusicSearchResponseDto } from '../../typings/music';
 import MusicItem from './MusicItem';
 
-const MusicList = ({ songs }: { songs: MusicResponseDto[] }) => {
+const MusicList = ({ songs }: { songs: MusicSearchResponseDto[] }) => {
   return (
     <div className="w-full h-full flex flex-col gap-4 p-8">
       {songs.map((s, i) => (

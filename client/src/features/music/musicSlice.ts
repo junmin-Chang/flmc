@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import musicService from '../../services/music/musicService';
-import { AddMusicDto, MusicResponseDto, ProfileMusicResponseDto } from '../../typings/music';
+import {
+  AddMusicDto,
+  MusicSearchResponseDto,
+  ProfileMusicResponseDto,
+} from '../../typings/music';
 import { axiosInstance } from '../../utils/axios';
 
 export const musicApi = createApi({
   reducerPath: 'musicApi/search',
   baseQuery: axiosInstance,
   endpoints: (builder) => ({
-    getMusicByKeyword: builder.query<MusicResponseDto[], string>({
+    getMusicByKeyword: builder.query<MusicSearchResponseDto[], string>({
       query: (keyword: string) =>
         `/music/${encodeURI(encodeURIComponent(keyword))}`,
     }),

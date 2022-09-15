@@ -1,4 +1,7 @@
-import { MusicResponseDto, ProfileMusicResponseDto } from '../../typings/music';
+import {
+  MusicSearchResponseDto,
+  ProfileMusicResponseDto,
+} from '../../typings/music';
 import MusicItem from './MusicItem';
 
 const MusicList = ({ songs }: { songs: ProfileMusicResponseDto[] }) => {

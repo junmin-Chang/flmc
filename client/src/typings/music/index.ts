@@ -6,7 +6,7 @@ export interface AddMusicDto {
   playlist?: string;
 }
 
-export interface MusicResponseDto {
+export interface MusicSearchResponseDto {
   album: {
     images: {
       height: number;
