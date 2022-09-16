@@ -5,11 +5,11 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import { store } from './store/store';
-import { setUpInterceptor } from './utils/axios';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import { injectStore } from './utils/axios';
 
-setUpInterceptor(store);
+injectStore(store);
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
