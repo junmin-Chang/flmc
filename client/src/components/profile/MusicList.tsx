@@ -1,5 +1,4 @@
 import {
-  MusicSearchResponseDto,
   ProfileMusicResponseDto,
 } from '../../typings/music';
 import MusicItem from './MusicItem';

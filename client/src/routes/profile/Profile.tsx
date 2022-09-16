@@ -1,10 +1,8 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import Skeleton from '../../components/common/SkeletonPlaylist';
 import PlaylistButton from '../../components/profile/PlaylistButton';
-import { useGetUserInfoByIdQuery } from '../../features/user/userSlice';
-
+import { useGetUserInfoByIdQuery } from '../../services/user/userService';
 const Profile = () => {
-  const navigate = useNavigate();
   const { userId } = useParams();
   const { isLoading, data: userInfo } = useGetUserInfoByIdQuery(
     userId as string,

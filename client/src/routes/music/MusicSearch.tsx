@@ -1,8 +1,8 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import SkeletonList from '../../components/common/SkeletonList';
 import MusicList from '../../components/music/MusicList';
-import { useGetMusicByKeywordQuery } from '../../features/music/musicSlice';
 import useDebounce from '../../hooks/useDebounce';
+import { useGetMusicByKeywordQuery } from '../../services/music/musicService';
 
 const MusicSearch = () => {
   const [value, setValue] = useState('');

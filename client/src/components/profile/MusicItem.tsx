@@ -1,6 +1,6 @@
 import { ProfileMusicResponseDto } from '../../typings/music';
 
-const MusicItem = ({ title, image, singer }: ProfileMusicResponseDto) => {
+const MusicItem = ({ title, image, singer }: Partial<ProfileMusicResponseDto>) => {
   return (
     <div className="w-full flex flex-row gap-4 items-center">
       <div className="w-fit h-fit">
