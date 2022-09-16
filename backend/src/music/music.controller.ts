@@ -5,11 +5,11 @@ import AuthRequired from '../common/decorators/auth.decorator';
 import { MusicRegisterDto } from './dto/music-register.dto';
 import { MusicService } from './music.service';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('music')
 export class MusicController {
   constructor(private musicServices: MusicService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':keyword')
   async getMusicByKeyword(@Param('keyword') keyword: string) {
     return await this.musicServices.getSongsByKeyword(keyword);
@@ -22,6 +22,8 @@ export class MusicController {
   ) {
     return await this.musicServices.getSongsByPlaylist(userId, playlist);
   }
+
+  @UseGuards(AuthGuard('jwt'))
   @Post('add')
   async addMusic(
     @Body() musicRegisterDto: MusicRegisterDto,

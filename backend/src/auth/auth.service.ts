@@ -72,7 +72,7 @@ export class AuthService {
       return {
         accessToken: await this.createAccessToken({ userId }),
         refreshToken: await this.createRefreshToken({ userId }),
-        user,
+        userInfo: user,
       };
     } catch (err) {
       console.log(err);
