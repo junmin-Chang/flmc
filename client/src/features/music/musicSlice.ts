@@ -6,25 +6,6 @@ import {
   MusicSearchResponseDto,
   ProfileMusicResponseDto,
 } from '../../typings/music';
-import { axiosInstance } from '../../utils/axios';
-
-export const musicApi = createApi({
-  reducerPath: 'musicApi/search',
-  baseQuery: axiosInstance,
-  endpoints: (builder) => ({
-    getMusicByKeyword: builder.query<MusicSearchResponseDto[], string>({
-      query: (keyword: string) =>
-        `/music/${encodeURI(encodeURIComponent(keyword))}`,
-    }),
-    getMusicByPlaylist: builder.query<
-      ProfileMusicResponseDto[] | null,
-      { userId: string | undefined; playlist: string | undefined }
-    >({
-      query: ({ userId, playlist }: { userId: string; playlist: string }) =>
-        `/music/${userId}/${encodeURI(encodeURIComponent(playlist))}`,
-    }),
-  }),
-});
 
 export const addMusic = createAsyncThunk(
   'music/add',
@@ -64,7 +45,5 @@ export const musicSlice = createSlice({
 });
 
 const { reducer } = musicSlice;
-export const { useGetMusicByKeywordQuery, useGetMusicByPlaylistQuery } =
-  musicApi;
 export const { selectMusic } = musicSlice.actions;
 export default reducer;

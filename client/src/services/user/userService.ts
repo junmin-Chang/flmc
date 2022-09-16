@@ -1,8 +1,8 @@
-import { LoginDto, RegisterDto } from '../../typings/auth';
-import { axiosInstance } from '../../utils/axios';
-
+import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { LoginDto, RegisterDto, UserInfo } from '../../typings/auth';
+import { axiosPrivateInstance, axiosPublicInstance } from '../../utils/axios';
 const register = async ({ username, userId, password }: RegisterDto) => {
-  return await axiosInstance.post('/auth/register', {
+  return await axiosPrivateInstance.post('/auth/register', {
     username,
     userId,
     password,
@@ -10,7 +10,7 @@ const register = async ({ username, userId, password }: RegisterDto) => {
 };
 
 const login = async ({ userId, password }: LoginDto) => {
-  const response = await axiosInstance.post('/auth/login', {
+  const response = await axiosPrivateInstance.post('/auth/login', {
     userId,
     password,
   });
@@ -18,21 +18,33 @@ const login = async ({ userId, password }: LoginDto) => {
 };
 
 const logout = () => {
-  localStorage.removeItem('auth');
+  localStorage.removeItem('persist:root');
 };
 
 const refresh = async (refreshToken: string) => {
-  return await axiosInstance.post('/auth/refresh', {
+  return await axiosPublicInstance.post('/auth/refresh', {
     token: refreshToken,
   });
 };
 
 const addPlaylist = async (playlist: string) => {
-  const response = await axiosInstance.post('/user/playlist', {
+  const response = await axiosPrivateInstance.post('/user/playlist', {
     playlist,
   });
   return response.data;
 };
+
+export const userApi = createApi({
+  reducerPath: 'userApi/search',
+  baseQuery: axiosPrivateInstance,
+  endpoints: (builder) => ({
+    getUserInfoById: builder.query<UserInfo, string>({
+      query: (userId: string) => `/user/${userId}`,
+    }),
+  }),
+});
+
+export const { useGetUserInfoByIdQuery } = userApi;
 
 const userService = {
   register,

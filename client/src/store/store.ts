@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
-import { musicApi } from '../features/music/musicSlice';
-import userReducer, { userApi } from '../features/user/userSlice';
+import { musicApi } from '../services/music/musicService';
+import userReducer from '../features/user/userSlice';
 import musicReducer from '../features/music/musicSlice';
 import modalReducer from '../features/modal/modalSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+import { userApi } from '../services/user/userService';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -24,7 +25,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(musicApi.middleware, userApi.middleware),
+    getDefaultMiddleware({ immutableCheck: false }).concat(
+      musicApi.middleware,
+      userApi.middleware,
+    ),
 });
 
 setupListeners(store.dispatch);

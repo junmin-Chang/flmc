@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createApi } from '@reduxjs/toolkit/query/react';
 import userService from '../../services/user/userService';
 import { RootState } from '../../store/store';
 import { LoginDto, RegisterDto, User, UserInfo } from '../../typings/auth';
-import { axiosInstance } from '../../utils/axios';
 
 export const register = createAsyncThunk(
   'user/register',
@@ -26,15 +24,6 @@ export const login = createAsyncThunk(
   async ({ userId, password }: LoginDto, thunkApi) => {
     try {
       const { data } = await userService.login({ userId, password });
-      if (data.accessToken) {
-        localStorage.setItem(
-          'auth',
-          JSON.stringify({
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-          }),
-        );
-      }
       return {
         user: data.userInfo,
         accessToken: data.accessToken,
@@ -117,9 +106,9 @@ const userSlice = createSlice({
     });
     builder.addCase(refreshToken.fulfilled, (state, action) => {
       state.isLoggedIn = true;
-      state.userInfo = action.payload?.userInfo;
       state.accessToken = action.payload?.accessToken;
       state.refreshToken = action.payload?.refreshToken;
+      state.userInfo = action.payload?.userInfo;
     });
     builder.addCase(addPlaylist.fulfilled, (state, action) => {
       state.userInfo!.playlist = [...state.userInfo!.playlist, action.payload];
@@ -127,16 +116,5 @@ const userSlice = createSlice({
   },
 });
 
-export const userApi = createApi({
-  reducerPath: 'userApi/search',
-  baseQuery: axiosInstance,
-  endpoints: (builder) => ({
-    getUserInfoById: builder.query<UserInfo, string>({
-      query: (userId: string) => `/user/${userId}`,
-    }),
-  }),
-});
-
-export const { useGetUserInfoByIdQuery } = userApi;
 const { reducer } = userSlice;
 export default reducer;
