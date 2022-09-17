@@ -29,11 +29,11 @@ const AddMusic = () => {
         <h2 className="text-2xl text-white font-black">음악 추가</h2>
         <div className="w-full flex flex-col py-6 gap-4">
           <Select
-            options={userInfo?.playlist.map((p: string) => ({
-              name: p,
-              label: p,
+            options={userInfo?.playlist?.map((p) => ({
+              name: p.name,
+              label: p.name,
             }))}
-            onChange={(newValue) => setPlaylist(newValue!.label)}
+            onChange={(newValue) => setPlaylist(newValue!.name)}
           />
           <button
             className="p-2 rounded-md bg-green-400 text-white font-black"

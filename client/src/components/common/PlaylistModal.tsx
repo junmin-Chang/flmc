@@ -16,7 +16,7 @@ const Modal = () => {
   );
   const formik = useFormik({
     initialValues: {
-      playlist: '',
+      name: '',
       desc: '',
     },
     onSubmit: (values) => {
@@ -40,9 +40,9 @@ const Modal = () => {
             이름
           </label>
           <input
-            id="playlist"
+            id="name"
             type="text"
-            value={formik.values.playlist}
+            value={formik.values.name}
             onChange={formik.handleChange}
             placeholder="ex) 드라이브 전용"
             className="bg-black px-4 h-[30px] text-white rounded-md mt-2"

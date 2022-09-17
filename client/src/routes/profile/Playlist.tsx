@@ -19,7 +19,6 @@ const Playlist = () => {
       <div className="flex flex-col items-center">
         {songs && songs.length === 0 && <NotFound className="w-full" />}
       </div>
-      <Quote />
       {songs && <MusicList songs={songs} />}
       {currentUserInfo?.userId === userId && (
         <Link className="m-auto mt-0" to="/music/add">

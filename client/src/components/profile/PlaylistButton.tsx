@@ -6,19 +6,19 @@ const PlaylistButton = ({
   userId,
 }: {
   userId: string | undefined;
-  playlist: string[] | undefined;
+  playlist: { name: string; desc: string }[] | undefined;
 }) => {
   const { userInfo: loggedInUserId } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   return (
     <div className="w-full px-4 py-2 flex flex-row gap-2">
-      {playlist?.slice(0, 3).map((p: string, i: number) => (
+      {playlist?.slice(0, 3).map((p, i: number) => (
         <Link
-          to={`/profile/${userId}/${p}`}
+          to={`/profile/${userId}/${p.name}`}
           key={i}
           className="p-2 bg-green-400 text-white rounded-md font-black"
         >
-          {p}
+          {p.name}
         </Link>
       ))}
       {userId === loggedInUserId?.userId && (
