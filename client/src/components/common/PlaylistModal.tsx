@@ -17,9 +17,14 @@ const Modal = () => {
   const formik = useFormik({
     initialValues: {
       playlist: '',
+      desc: '',
     },
     onSubmit: (values) => {
-      dispatch(addPlaylist(values.playlist));
+      dispatch(
+        addPlaylist({
+          ...values,
+        }),
+      );
     },
   });
   return (
@@ -41,6 +46,15 @@ const Modal = () => {
             onChange={formik.handleChange}
             placeholder="ex) 드라이브 전용"
             className="bg-black px-4 h-[30px] text-white rounded-md mt-2"
+          />
+          <label htmlFor="desc" className="text-white bold pt-4">
+            설명
+          </label>
+          <textarea
+            id="desc"
+            value={formik.values.desc}
+            onChange={formik.handleChange}
+            className="bg-black px-4 h-[200px] text-white rounded-md mt-2"
           />
           <button
             type="submit"

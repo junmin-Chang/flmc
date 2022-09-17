@@ -23,6 +23,7 @@ const MusicSearch = () => {
           className="w-full h-[50px] px-4 bg-gray-800 rounded-lg text-white"
           onChange={onChangeKeyword}
           value={value}
+          placeholder="검색"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"

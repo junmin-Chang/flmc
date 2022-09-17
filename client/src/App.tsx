@@ -6,10 +6,10 @@ import AuthLayout from './routes/auth/AuthLayout';
 import Profile from './routes/profile/Profile';
 import Nav from './components/common/Nav';
 import { useAppSelector } from './store/hook';
-import Modal from './components/common/Modal';
+import Modal from './components/common/PlaylistModal';
 import Playlist from './routes/profile/Playlist';
 import MusicSearch from './routes/music/MusicSearch';
-import AddMusic from './components/music/AddModal';
+import AddMusic from './components/common/MusicModal';
 
 function App() {
   const { isOpen, mode } = useAppSelector((state) => state.modal);

@@ -20,14 +20,13 @@ export const addMusic = createAsyncThunk(
     return { song: response };
   },
 );
-const initialState: { songs: any[]; selectedSong: AddMusicDto } = {
+const initialState: { selectedSong: AddMusicDto } = {
   selectedSong: {
     songId: '',
     title: '',
     singer: '',
     image: '',
   },
-  songs: [],
 };
 export const musicSlice = createSlice({
   name: 'music',
@@ -38,9 +37,7 @@ export const musicSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addMusic.fulfilled, (state, action) => {
-      state.songs = [...state.songs, action.payload.song];
-    });
+    builder.addCase(addMusic.fulfilled, (state, action) => {});
   },
 });
 

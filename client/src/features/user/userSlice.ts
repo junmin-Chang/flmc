@@ -56,9 +56,9 @@ export const refreshToken = createAsyncThunk(
 
 export const addPlaylist = createAsyncThunk(
   'music/playlist',
-  async (playlist: string, thunkApi) => {
+  async ({ playlist, desc }: { playlist: string; desc: string }, thunkApi) => {
     try {
-      const response = await userService.addPlaylist(playlist);
+      const response = await userService.addPlaylist({ playlist, desc });
       if (response) {
         return response;
       }

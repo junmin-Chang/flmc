@@ -47,6 +47,7 @@ const AddMusic = () => {
                   playlist,
                 }),
               );
+              dispatch(hideAddMusic());
             }}
           >
             추가

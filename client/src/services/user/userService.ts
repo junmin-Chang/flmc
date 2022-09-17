@@ -27,9 +27,16 @@ const refresh = async (refreshToken: string) => {
   });
 };
 
-const addPlaylist = async (playlist: string) => {
+const addPlaylist = async ({
+  playlist,
+  desc,
+}: {
+  playlist: string;
+  desc: string;
+}) => {
   const response = await axiosPrivateInstance.post('/user/playlist', {
     playlist,
+    desc,
   });
   return response.data;
 };
