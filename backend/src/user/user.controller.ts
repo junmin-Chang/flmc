@@ -16,9 +16,9 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Post('playlist')
   async addPlaylist(
-    @Body() body: { playlist: string },
+    @Body() body: { name: string; desc: string },
     @AuthRequired() user: User,
   ) {
-    return await this.userServices.addPlaylist(body.playlist, user);
+    return await this.userServices.addPlaylist(body.name, body.desc, user);
   }
 }

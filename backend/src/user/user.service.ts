@@ -15,11 +15,13 @@ export class UserService {
       where: {
         userId: userId,
       },
+      include: {
+        playlist: true,
+      },
     });
 
     if (!userToGet) return null;
 
-    delete userToGet.password;
     return userToGet;
   }
 
@@ -44,20 +46,16 @@ export class UserService {
     return user;
   }
 
-  async addPlaylist(playlist: string, user) {
-    const result = await this.prismaServices.user.update({
-      where: {
+  async addPlaylist(name: string, desc: string, user) {
+    const result = await this.prismaServices.playlist.create({
+      data: {
+        name,
+        desc,
         userId: user.userId,
       },
-      data: {
-        playlist: {
-          push: playlist,
-        },
-      },
     });
-
     if (result) {
-      return playlist;
+      return result;
     }
   }
 }

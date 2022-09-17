@@ -20,6 +20,9 @@ export class AuthService {
     const { userId, password } = loginDto;
     const user = await this.prismaServices.user.findUnique({
       where: { userId },
+      include: {
+        playlist: true,
+      },
     });
 
     if (!user) {

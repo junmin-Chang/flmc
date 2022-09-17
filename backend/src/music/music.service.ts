@@ -4,6 +4,7 @@ import { User } from '@prisma/client';
 import { lastValueFrom, map } from 'rxjs';
 import { PrismaService } from '../provider/prisma.service';
 import { TokenService } from '../provider/token.service';
+import { MusicRegisterDto } from './dto/music-register.dto';
 
 @Injectable()
 export class MusicService {
@@ -56,6 +57,9 @@ export class MusicService {
     const result = await this.prismaServices.song.create({
       data: {
         ...musicRegisterDto,
+        playlist: {
+          connect: { name: musicRegisterDto.playlist },
+        },
         user: {
           connect: { userId: user.userId },
         },
@@ -68,7 +72,12 @@ export class MusicService {
     const songsToGet = await this.prismaServices.song.findMany({
       where: {
         userId,
-        playlist: decodeURI(decodeURIComponent(playlist)),
+        playlist: {
+          name: playlist,
+        },
+      },
+      include: {
+        playlist: true,
       },
     });
     return songsToGet;

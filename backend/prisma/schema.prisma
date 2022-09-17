@@ -11,23 +11,33 @@ datasource db {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  username String
-  password String
-  userId String @unique()
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  songs Song[]
-  playlist String[] @default([])
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  username  String
+  password  String
+  userId    String     @unique()
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  songs     Song[]
+  playlist  Playlist[]
 }
 
 model Song {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  songId String 
-  title String
-  image String
-  singer String
-  playlist String
-  userId String 
-  user User? @relation(fields: [userId], references: [userId])
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  songId   String
+  title    String
+  image    String
+  singer   String
+  playlistId String
+  playlist Playlist @relation(fields: [playlistId], references: [name])
+  userId   String
+  user     User?    @relation(fields: [userId], references: [userId])
+}
+
+model Playlist {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  name       String @unique
+  desc       String
+  userId     String
+  user       User?  @relation(fields: [userId], references: [userId])
+  Song       Song[]
 }
