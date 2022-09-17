@@ -21,7 +21,7 @@ export class UserService {
     });
 
     if (!userToGet) return null;
-
+    delete userToGet.password;
     return userToGet;
   }
 

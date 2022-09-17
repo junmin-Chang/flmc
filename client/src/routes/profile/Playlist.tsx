@@ -16,6 +16,11 @@ const Playlist = () => {
   return (
     <div className="bg-black w-full h-full flex flex-col p-8">
       {isLoading && <SkeletonList numberToRender={3} />}
+
+      {!isLoading &&
+        currentUserInfo.playlist.map((p) => {
+          if (p.name === playlist) return <Quote content={p.desc} />;
+        })}
       <div className="flex flex-col items-center">
         {songs && songs.length === 0 && <NotFound className="w-full" />}
       </div>

@@ -3,7 +3,7 @@ export interface AddMusicDto {
   title: string;
   image: string;
   singer: string;
-  playlist?: string;
+  playlistName?: string;
 }
 
 export interface MusicSearchResponseDto {
@@ -26,4 +26,8 @@ export interface ProfileMusicResponseDto {
   image: string;
   id: string;
   singer: string;
+  playlist: {
+    name: string;
+    desc: string;
+  };
 }

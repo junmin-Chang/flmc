@@ -8,7 +8,7 @@ const AddMusic = () => {
   const { title, image, songId, singer } = useAppSelector(
     (state) => state.music.selectedSong,
   );
-  const [playlist, setPlaylist] = useState('');
+  const [playlistName, setPlaylistName] = useState('');
   const dispatch = useAppDispatch();
 
   const onClose = useCallback(
@@ -33,7 +33,7 @@ const AddMusic = () => {
               name: p.name,
               label: p.name,
             }))}
-            onChange={(newValue) => setPlaylist(newValue!.name)}
+            onChange={(newValue) => setPlaylistName(newValue!.name)}
           />
           <button
             className="p-2 rounded-md bg-green-400 text-white font-black"
@@ -44,7 +44,7 @@ const AddMusic = () => {
                   singer,
                   image,
                   songId,
-                  playlist,
+                  playlistName,
                 }),
               );
               dispatch(hideAddMusic());

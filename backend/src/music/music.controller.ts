@@ -18,9 +18,9 @@ export class MusicController {
   @Get(':userId/:playlist')
   async getSongsByPlaylist(
     @Param('userId') userId: string,
-    @Param('playlist') playlist: string,
+    @Param('playlist') playlistName: string,
   ) {
-    return await this.musicServices.getSongsByPlaylist(userId, playlist);
+    return await this.musicServices.getSongsByPlaylist(userId, playlistName);
   }
 
   @UseGuards(AuthGuard('jwt'))

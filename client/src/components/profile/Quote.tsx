@@ -1,4 +1,4 @@
-const Quote = () => (
+const Quote = ({ content }: { content: string }) => (
   <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white">
     <svg
       aria-hidden="true"
@@ -12,7 +12,7 @@ const Quote = () => (
         fill="currentColor"
       ></path>
     </svg>
-    <p className="text-gray-400">""</p>
+    <p className="text-gray-400">"{content}"</p>
   </blockquote>
 );
 

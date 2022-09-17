@@ -11,14 +11,14 @@ const addMusic = async ({
   image,
   songId,
   singer,
-  playlist,
+  playlistName,
 }: AddMusicDto) => {
   const response = await axiosPrivateInstance.post('/music/add', {
     title,
     image,
     songId,
     singer,
-    playlist,
+    playlistName,
   });
 
   return response.data;
