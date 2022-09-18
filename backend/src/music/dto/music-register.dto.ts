@@ -4,4 +4,5 @@ export class MusicRegisterDto {
   songId: string;
   singer: string;
   playlistName: string;
+  playlistId: string;
 }

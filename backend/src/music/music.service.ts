@@ -4,6 +4,7 @@ import { User } from '@prisma/client';
 import { lastValueFrom, map } from 'rxjs';
 import { PrismaService } from '../provider/prisma.service';
 import { TokenService } from '../provider/token.service';
+import { MusicRegisterDto } from './dto/music-register.dto';
 
 @Injectable()
 export class MusicService {
@@ -40,8 +41,9 @@ export class MusicService {
     return data.tracks.items;
   }
 
-  async addSong(musicRegisterDto, user: User) {
-    const { songId } = musicRegisterDto;
+  async addSong(musicRegisterDto: MusicRegisterDto, user: User) {
+    const { songId, playlistName, playlistId, title, singer, image } =
+      musicRegisterDto;
     const isExists = await this.prismaServices.song.findFirst({
       where: {
         songId,
@@ -55,9 +57,17 @@ export class MusicService {
 
     const result = await this.prismaServices.song.create({
       data: {
-        ...musicRegisterDto,
+        songId,
+        title,
+        image,
+        playlistName,
+        singer,
+
         user: {
           connect: { userId: user.userId },
+        },
+        playlist: {
+          connect: { id: playlistId },
         },
       },
     });

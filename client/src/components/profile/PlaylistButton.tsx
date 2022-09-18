@@ -1,12 +1,13 @@
 import { showAddPlaylist } from '../../features/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { Link } from 'react-router-dom';
+import { deletePlaylist } from '../../features/user/userSlice';
 const PlaylistButton = ({
   playlist,
   userId,
 }: {
   userId: string | undefined;
-  playlist: { name: string; desc: string }[] | undefined;
+  playlist: { id: string; name: string; desc: string }[] | undefined;
 }) => {
   const { userInfo: loggedInUserId } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const PlaylistButton = ({
         <Link
           to={`/profile/${userId}/${p.name}`}
           key={i}
+          state={{ playlistId: p.id }}
           className="p-2 bg-green-400 text-white rounded-md font-black"
         >
           {p.name}

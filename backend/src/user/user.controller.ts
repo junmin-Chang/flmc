@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import AuthRequired from '../common/decorators/auth.decorator';
@@ -20,5 +28,11 @@ export class UserController {
     @AuthRequired() user: User,
   ) {
     return await this.userServices.addPlaylist(body.name, body.desc, user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('playlist/:playlistId')
+  async deletePlaylist(@Param('playlistId') playlistId: string) {
+    return await this.userServices.deletePlaylist(playlistId);
   }
 }

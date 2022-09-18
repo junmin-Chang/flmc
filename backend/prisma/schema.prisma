@@ -27,7 +27,9 @@ model Song {
   title    String
   image    String
   singer   String
+  playlistId String
   playlistName String
+  playlist Playlist? @relation(fields: [playlistId], references: [id], onDelete: Cascade)
   userId   String
   user     User?    @relation(fields: [userId], references: [userId])
 }
@@ -38,4 +40,5 @@ model Playlist {
   desc       String
   userId     String
   user       User?  @relation(fields: [userId], references: [userId])
+  song       Song[]
 }

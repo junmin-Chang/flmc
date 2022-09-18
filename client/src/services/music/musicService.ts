@@ -12,6 +12,7 @@ const addMusic = async ({
   songId,
   singer,
   playlistName,
+  playlistId,
 }: AddMusicDto) => {
   const response = await axiosPrivateInstance.post('/music/add', {
     title,
@@ -19,6 +20,7 @@ const addMusic = async ({
     songId,
     singer,
     playlistName,
+    playlistId,
   });
 
   return response.data;

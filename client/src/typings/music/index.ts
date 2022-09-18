@@ -4,6 +4,7 @@ export interface AddMusicDto {
   image: string;
   singer: string;
   playlistName?: string;
+  playlistId?: string;
 }
 
 export interface MusicSearchResponseDto {

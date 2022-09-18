@@ -12,7 +12,7 @@ export interface LoginDto {
 export interface UserInfo {
   username: string;
   userId: string;
-  playlist: { name: string; desc: string }[];
+  playlist: { id: string; name: string; desc: string }[];
   createdAt: Date;
   updatedAt: Date;
 }

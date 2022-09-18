@@ -35,6 +35,12 @@ const addPlaylist = async ({ name, desc }: { name: string; desc: string }) => {
   return response.data;
 };
 
+const deletePlaylist = async (playlistId: string) => {
+  const response = await axiosPrivateInstance.delete(
+    `/user/playlist/${playlistId}`,
+  );
+  return response.data;
+};
 export const userApi = createApi({
   reducerPath: 'userApi/search',
   tagTypes: ['User'],
@@ -55,6 +61,7 @@ const userService = {
   logout,
   refresh,
   addPlaylist,
+  deletePlaylist,
 };
 
 export default userService;

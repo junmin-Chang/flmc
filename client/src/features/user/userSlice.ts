@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { build } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/cacheLifecycle';
 import userService from '../../services/user/userService';
 import { RootState } from '../../store/store';
 import { LoginDto, RegisterDto, User, UserInfo } from '../../typings/auth';
@@ -55,7 +56,7 @@ export const refreshToken = createAsyncThunk(
 );
 
 export const addPlaylist = createAsyncThunk(
-  'music/playlist',
+  'music/playlist/add',
   async ({ name, desc }: { name: string; desc: string }, thunkApi) => {
     try {
       const response = await userService.addPlaylist({
@@ -71,6 +72,19 @@ export const addPlaylist = createAsyncThunk(
   },
 );
 
+export const deletePlaylist = createAsyncThunk(
+  'music/playlist/delete',
+  async (playlistId: string, thunkApi) => {
+    try {
+      const response = await userService.deletePlaylist(playlistId);
+      if (response) {
+        return response;
+      }
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data.message);
+    }
+  },
+);
 const initialState: User = {
   isLoggedIn: false,
   accessToken: null,
@@ -115,6 +129,9 @@ const userSlice = createSlice({
     });
     builder.addCase(addPlaylist.fulfilled, (state, action) => {
       state.userInfo!.playlist = [...state.userInfo!.playlist, action.payload];
+    });
+    builder.addCase(deletePlaylist.fulfilled, (state, action) => {
+      state.userInfo.playlist.filter((p) => p.id !== action.payload.id);
     });
   },
 });

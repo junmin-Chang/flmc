@@ -9,6 +9,7 @@ const AddMusic = () => {
     (state) => state.music.selectedSong,
   );
   const [playlistName, setPlaylistName] = useState('');
+  const [playlistId, setPlaylistId] = useState('');
   const dispatch = useAppDispatch();
 
   const onClose = useCallback(
@@ -30,10 +31,14 @@ const AddMusic = () => {
         <div className="w-full flex flex-col py-6 gap-4">
           <Select
             options={userInfo?.playlist?.map((p) => ({
+              playlistId: p.id,
               name: p.name,
               label: p.name,
             }))}
-            onChange={(newValue) => setPlaylistName(newValue!.name)}
+            onChange={(newValue) => {
+              setPlaylistName(newValue!.name);
+              setPlaylistId(newValue.playlistId);
+            }}
           />
           <button
             className="p-2 rounded-md bg-green-400 text-white font-black"
@@ -45,6 +50,7 @@ const AddMusic = () => {
                   image,
                   songId,
                   playlistName,
+                  playlistId,
                 }),
               );
               dispatch(hideAddMusic());
