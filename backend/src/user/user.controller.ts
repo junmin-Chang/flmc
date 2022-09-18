@@ -32,7 +32,10 @@ export class UserController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('playlist/:playlistId')
-  async deletePlaylist(@Param('playlistId') playlistId: string) {
-    return await this.userServices.deletePlaylist(playlistId);
+  async deletePlaylist(
+    @Param('playlistId') playlistId: string,
+    @AuthRequired() user: User,
+  ) {
+    return await this.userServices.deletePlaylist(playlistId, user);
   }
 }
