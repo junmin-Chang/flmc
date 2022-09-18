@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import Skeleton from '../../components/common/SkeletonPlaylist';
 import PlaylistButton from '../../components/profile/PlaylistButton';
 import { useGetUserInfoByIdQuery } from '../../services/user/userService';
@@ -8,7 +8,7 @@ const Profile = () => {
     userId as string,
     {
       skip: userId === undefined,
-      refetchOnMountOrArgChange: true,
+      refetchOnFocus: true,
     },
   );
 

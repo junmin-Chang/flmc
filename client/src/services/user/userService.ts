@@ -37,10 +37,12 @@ const addPlaylist = async ({ name, desc }: { name: string; desc: string }) => {
 
 export const userApi = createApi({
   reducerPath: 'userApi/search',
+  tagTypes: ['User'],
   baseQuery: axiosPrivateInstance,
   endpoints: (builder) => ({
     getUserInfoById: builder.query<UserInfo, string>({
       query: (userId: string) => `/user/${userId}`,
+      providesTags: ['User'],
     }),
   }),
 });

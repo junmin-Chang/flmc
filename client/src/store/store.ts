@@ -25,10 +25,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ immutableCheck: false }).concat(
+    getDefaultMiddleware({ immutableCheck: false }).concat([
       musicApi.middleware,
       userApi.middleware,
-    ),
+    ]),
 });
 
 setupListeners(store.dispatch);

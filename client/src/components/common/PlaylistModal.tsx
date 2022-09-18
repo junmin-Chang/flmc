@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import { ChangeEvent, useCallback } from 'react';
 import { hideAddPlaylist } from '../../features/modal/modalSlice';
 import { addPlaylist } from '../../features/user/userSlice';
+import { userApi } from '../../services/user/userService';
 import { useAppDispatch } from '../../store/hook';
 
 const Modal = () => {
@@ -19,12 +20,14 @@ const Modal = () => {
       name: '',
       desc: '',
     },
-    onSubmit: (values) => {
-      dispatch(
+    onSubmit: async (values) => {
+      await dispatch(
         addPlaylist({
           ...values,
         }),
       );
+      dispatch(hideAddPlaylist());
+      dispatch(userApi.util.invalidateTags(['User']));
     },
   });
   return (

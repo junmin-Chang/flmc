@@ -4,22 +4,28 @@ import MusicList from '../../components/profile/MusicList';
 import NotFound from '../../components/profile/NotFound';
 import Quote from '../../components/profile/Quote';
 import { useGetMusicByPlaylistQuery } from '../../services/music/musicService';
+import { useGetUserInfoByIdQuery } from '../../services/user/userService';
 import { useAppSelector } from '../../store/hook';
 
 const Playlist = () => {
   const { userId, playlist } = useParams();
-  const { isLoading, data: songs } = useGetMusicByPlaylistQuery({
-    userId,
-    playlist,
-  });
-  const { userInfo: currentUserInfo } = useAppSelector((state) => state.user);
+  const { isLoading, data: songs } = useGetMusicByPlaylistQuery(
+    {
+      userId,
+      playlist,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    },
+  );
+  const { data: currentUserInfo } = useGetUserInfoByIdQuery(userId);
   return (
     <div className="bg-black w-full h-full flex flex-col p-8">
       {isLoading && <SkeletonList numberToRender={3} />}
 
       {!isLoading &&
-        currentUserInfo.playlist.map((p) => {
-          if (p.name === playlist) return <Quote content={p.desc} />;
+        currentUserInfo.playlist.map((p, i) => {
+          if (p.name === playlist) return <Quote key={i} content={p.desc} />;
         })}
       <div className="flex flex-col items-center">
         {songs && songs.length === 0 && <NotFound className="w-full" />}
