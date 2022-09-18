@@ -9,20 +9,12 @@ import {
 
 export const addMusic = createAsyncThunk(
   'music/add',
-  async ({
-    title,
-    image,
-    songId,
-    singer,
-    playlistName,
-    playlistId,
-  }: AddMusicDto) => {
+  async ({ title, image, songId, singer, playlistId }: AddMusicDto) => {
     const response = await musicService.addMusic({
       title,
       image,
       songId,
       singer,
-      playlistName,
       playlistId,
     });
     return { song: response };

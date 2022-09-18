@@ -3,6 +3,5 @@ export class MusicRegisterDto {
   image: string;
   songId: string;
   singer: string;
-  playlistName: string;
   playlistId: string;
 }

@@ -11,7 +11,6 @@ const addMusic = async ({
   image,
   songId,
   singer,
-  playlistName,
   playlistId,
 }: AddMusicDto) => {
   const response = await axiosPrivateInstance.post('/music/add', {
@@ -19,7 +18,6 @@ const addMusic = async ({
     image,
     songId,
     singer,
-    playlistName,
     playlistId,
   });
 
@@ -35,10 +33,10 @@ export const musicApi = createApi({
     }),
     getMusicByPlaylist: builder.query<
       ProfileMusicResponseDto[] | null,
-      { userId: string | undefined; playlist: string | undefined }
+      { userId: string | undefined; playlistId: string | undefined }
     >({
-      query: ({ userId, playlist }: { userId: string; playlist: string }) =>
-        `/music/${userId}/${encodeURI(encodeURIComponent(playlist))}`,
+      query: ({ userId, playlistId }: { userId: string; playlistId: string }) =>
+        `/music/${userId}/${playlistId}`,
     }),
   }),
 });

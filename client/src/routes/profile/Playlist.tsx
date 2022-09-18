@@ -13,14 +13,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const Playlist = () => {
   const dispatch = useAppDispatch();
-  const { userId, playlist } = useParams();
+  const { userId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { playlistId }: any = location.state;
   const { isLoading, data: songs } = useGetMusicByPlaylistQuery(
     {
       userId,
-      playlist,
+      playlistId,
     },
     {
       refetchOnMountOrArgChange: true,
@@ -45,7 +45,7 @@ const Playlist = () => {
 
       {!isLoading &&
         currentUserInfo?.playlist.map((p, i) => {
-          if (p.name === playlist) return <Quote key={i} content={p.desc} />;
+          if (p.id === playlistId) return <Quote key={i} content={p.desc} />;
         })}
       <div className="flex flex-col items-center">
         {songs && songs.length === 0 && <NotFound className="w-full" />}

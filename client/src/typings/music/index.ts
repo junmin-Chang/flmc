@@ -3,7 +3,6 @@ export interface AddMusicDto {
   title: string;
   image: string;
   singer: string;
-  playlistName?: string;
   playlistId?: string;
 }
 

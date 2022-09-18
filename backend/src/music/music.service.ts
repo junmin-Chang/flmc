@@ -42,8 +42,7 @@ export class MusicService {
   }
 
   async addSong(musicRegisterDto: MusicRegisterDto, user: User) {
-    const { songId, playlistName, playlistId, title, singer, image } =
-      musicRegisterDto;
+    const { songId, playlistId, title, singer, image } = musicRegisterDto;
     const isExists = await this.prismaServices.song.findFirst({
       where: {
         songId,
@@ -60,7 +59,6 @@ export class MusicService {
         songId,
         title,
         image,
-        playlistName,
         singer,
 
         user: {
@@ -74,11 +72,11 @@ export class MusicService {
     return result;
   }
 
-  async getSongsByPlaylist(userId: string, playlistName: string) {
+  async getSongsByPlaylist(userId: string, playlistId: string) {
     const songsToGet = await this.prismaServices.song.findMany({
       where: {
         userId,
-        playlistName: decodeURI(decodeURIComponent(playlistName)),
+        playlistId,
       },
     });
     return songsToGet;
