@@ -81,4 +81,17 @@ export class MusicService {
     });
     return songsToGet;
   }
+
+  async deleteSongById(id: string[], user) {
+    const result = await this.prismaServices.song.deleteMany({
+      where: {
+        userId: user.userId,
+        id: {
+          in: id,
+        },
+      },
+    });
+
+    return result;
+  }
 }

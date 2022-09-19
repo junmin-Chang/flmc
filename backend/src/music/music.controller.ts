@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import AuthRequired from '../common/decorators/auth.decorator';
@@ -30,5 +38,11 @@ export class MusicController {
     @AuthRequired() user: User,
   ) {
     return await this.musicServices.addSong(musicRegisterDto, user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('delete')
+  async deleteSongById(@Body('id') id: string[], @AuthRequired() user: User) {
+    return await this.musicServices.deleteSongById(id, user);
   }
 }
