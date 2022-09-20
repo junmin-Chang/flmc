@@ -23,6 +23,15 @@ const addMusic = async ({
 
   return response.data;
 };
+
+const deleteMusic = async (ids: string[]) => {
+  const response = await axiosPrivateInstance.delete('/music/delete', {
+    data: {
+      id: ids,
+    },
+  });
+  return response.data;
+};
 export const musicApi = createApi({
   reducerPath: 'musicApi/search',
   baseQuery: axiosPrivateInstance,
@@ -43,6 +52,7 @@ export const musicApi = createApi({
 
 const musicService = {
   addMusic,
+  deleteMusic,
 };
 export const { useGetMusicByKeywordQuery, useGetMusicByPlaylistQuery } =
   musicApi;
