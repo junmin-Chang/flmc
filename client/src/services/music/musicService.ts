@@ -34,6 +34,7 @@ const deleteMusic = async (ids: string[]) => {
 };
 export const musicApi = createApi({
   reducerPath: 'musicApi/search',
+  tagTypes: ['Music'],
   baseQuery: axiosPrivateInstance,
   endpoints: (builder) => ({
     getMusicByKeyword: builder.query<MusicSearchResponseDto[], string>({
@@ -46,6 +47,7 @@ export const musicApi = createApi({
     >({
       query: ({ userId, playlistId }: { userId: string; playlistId: string }) =>
         `/music/${userId}/${playlistId}`,
+      providesTags: ['Music'],
     }),
   }),
 });
