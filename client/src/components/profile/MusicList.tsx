@@ -23,12 +23,14 @@ const MusicList = ({ songs }: { songs: ProfileMusicResponseDto[] }) => {
   return (
     <div className="w-full flex flex-col gap-4 p-8">
       <div className="flex flex-row pb-4 justify-between">
-        <p
-          className="text-green-300 text-sm max-w-[100px]"
-          onClick={() => setEdit(!edit)}
-        >
-          편집
-        </p>
+        {songs.length !== 0 && (
+          <p
+            className="text-green-300 text-sm max-w-[100px]"
+            onClick={() => setEdit(!edit)}
+          >
+            편집
+          </p>
+        )}
         {songsToDelete.length !== 0 && (
           <span
             className="text-red-300 text-sm max-w-[100px]"

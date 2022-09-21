@@ -1,7 +1,6 @@
 import { showAddPlaylist } from '../../features/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { Link } from 'react-router-dom';
-import { deletePlaylist } from '../../features/user/userSlice';
 const PlaylistButton = ({
   playlist,
   userId,
@@ -13,7 +12,7 @@ const PlaylistButton = ({
   const dispatch = useAppDispatch();
   return (
     <div className="w-full px-4 py-2 flex flex-row gap-2">
-      {playlist?.slice(0, 3).map((p, i: number) => (
+      {playlist?.slice(0, 3).map((p, i) => (
         <Link
           to={`/profile/${userId}/${p.name}`}
           key={i}

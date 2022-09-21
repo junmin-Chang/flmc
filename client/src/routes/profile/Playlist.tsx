@@ -9,7 +9,7 @@ import {
   useGetUserInfoByIdQuery,
   userApi,
 } from '../../services/user/userService';
-import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { useAppDispatch } from '../../store/hook';
 
 const Playlist = () => {
   const dispatch = useAppDispatch();
@@ -31,14 +31,14 @@ const Playlist = () => {
     <div className="bg-black w-full h-full flex flex-col p-8">
       <div className="flex w-full">
         <button
-          className="text-red-800 bold ml-auto"
+          className="text-red-300 bold ml-auto"
           onClick={async () => {
             await dispatch(deletePlaylist(playlistId));
             dispatch(userApi.util.invalidateTags(['User']));
             navigate(`/profile/${userId}`);
           }}
         >
-          Playlist 삭제
+          플레이리스트 삭제
         </button>
       </div>
       {isLoading && <SkeletonList numberToRender={3} />}
