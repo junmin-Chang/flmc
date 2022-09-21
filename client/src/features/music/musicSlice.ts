@@ -30,7 +30,6 @@ export const deleteMusic = createAsyncThunk(
 );
 const initialState: {
   selectedSong: AddMusicDto;
-  songsToDelete: string[];
 } = {
   selectedSong: {
     songId: '',
@@ -38,7 +37,6 @@ const initialState: {
     singer: '',
     image: '',
   },
-  songsToDelete: [],
 };
 export const musicSlice = createSlice({
   name: 'music',
