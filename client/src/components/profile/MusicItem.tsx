@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { selectToDelete } from '../../features/music/musicSlice';
 import { useAppDispatch } from '../../store/hook';
 import { ProfileMusicResponseDto } from '../../typings/music';
 
@@ -9,11 +8,11 @@ const MusicItem = ({
   singer,
   id,
   edit,
-}: Partial<ProfileMusicResponseDto> & { edit: boolean }) => {
-  const dispatch = useAppDispatch();
-  const onCheckSong = useCallback((e) => {
-    dispatch(selectToDelete(id));
-  }, []);
+  onChangeCheck,
+}: Partial<ProfileMusicResponseDto> & {
+  edit: boolean;
+  onChangeCheck: (id: string) => void;
+}) => {
   return (
     <div className="w-full flex flex-row gap-4 items-center">
       <div className="w-fit h-fit">
@@ -26,7 +25,7 @@ const MusicItem = ({
       {edit && (
         <div className="ml-auto">
           <input
-            onChange={onCheckSong}
+            onChange={() => onChangeCheck(id)}
             id="green-checkbox"
             type="checkbox"
             className="w-8 h-8 text-green-600 bg-green-100 rounded border-gray-300 focus:ring-green-500 focus:ring-2"
