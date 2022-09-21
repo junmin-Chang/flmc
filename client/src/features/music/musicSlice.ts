@@ -20,10 +20,14 @@ export const addMusic = createAsyncThunk(
     return { song: response };
   },
 );
-export const deleteMusic = async (ids: string[]) => {
-  const response = await musicService.deleteMusic(ids);
-  return response;
-};
+
+export const deleteMusic = createAsyncThunk(
+  'music/delete',
+  async (ids: string[]) => {
+    const response = await musicService.deleteMusic(ids);
+    return response;
+  },
+);
 const initialState: {
   selectedSong: AddMusicDto;
   songsToDelete: string[];
@@ -43,15 +47,6 @@ export const musicSlice = createSlice({
     selectMusic: (state, action) => {
       state.selectedSong = action.payload;
     },
-    selectToDelete: (state, action) => {
-      if (state.songsToDelete.includes(action.payload)) {
-        state.songsToDelete = state.songsToDelete.filter(
-          (i) => i !== action.payload,
-        );
-      } else {
-        state.songsToDelete = [...state.songsToDelete, action.payload];
-      }
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(addMusic.fulfilled, (state, action) => {});
@@ -59,5 +54,5 @@ export const musicSlice = createSlice({
 });
 
 const { reducer } = musicSlice;
-export const { selectMusic, selectToDelete } = musicSlice.actions;
+export const { selectMusic } = musicSlice.actions;
 export default reducer;
