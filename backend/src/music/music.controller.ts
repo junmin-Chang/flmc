@@ -42,7 +42,10 @@ export class MusicController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('delete')
-  async deleteSongById(@Body('id') id: string[], @AuthRequired() user: User) {
-    return await this.musicServices.deleteSongById(id, user);
+  async deleteSongByIds(
+    @Body('ids') ids: string[],
+    @AuthRequired() user: User,
+  ) {
+    return await this.musicServices.deleteSongByIds(ids, user);
   }
 }

@@ -27,7 +27,7 @@ const addMusic = async ({
 const deleteMusic = async (ids: string[]) => {
   const response = await axiosPrivateInstance.delete('/music/delete', {
     data: {
-      id: ids,
+      ids: ids,
     },
   });
   return response.data;
