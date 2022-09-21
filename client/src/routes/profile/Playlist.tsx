@@ -9,7 +9,7 @@ import {
   useGetUserInfoByIdQuery,
   userApi,
 } from '../../services/user/userService';
-import { useAppDispatch } from '../../store/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const Playlist = () => {
   const dispatch = useAppDispatch();
@@ -26,20 +26,23 @@ const Playlist = () => {
       refetchOnMountOrArgChange: true,
     },
   );
+  const { userInfo } = useAppSelector((state) => state.user);
   const { data: currentUserInfo } = useGetUserInfoByIdQuery(userId);
   return (
     <div className="bg-black w-full h-full flex flex-col p-8">
       <div className="flex w-full">
-        <button
-          className="text-red-300 bold ml-auto"
-          onClick={async () => {
-            await dispatch(deletePlaylist(playlistId));
-            dispatch(userApi.util.invalidateTags(['User']));
-            navigate(`/profile/${userId}`);
-          }}
-        >
-          플레이리스트 삭제
-        </button>
+        {userInfo && userInfo.userId === currentUserInfo.userId && (
+          <button
+            className="text-red-300 bold ml-auto"
+            onClick={async () => {
+              await dispatch(deletePlaylist(playlistId));
+              dispatch(userApi.util.invalidateTags(['User']));
+              navigate(`/profile/${userId}`);
+            }}
+          >
+            플레이리스트 삭제
+          </button>
+        )}
       </div>
       {isLoading && <SkeletonList numberToRender={3} />}
 

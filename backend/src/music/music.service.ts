@@ -46,10 +46,9 @@ export class MusicService {
     const isExists = await this.prismaServices.song.findFirst({
       where: {
         songId,
-        userId: user.id,
+        userId: user.userId,
       },
     });
-
     if (isExists) {
       throw new HttpException('이미 등록된 노래입니다', HttpStatus.BAD_REQUEST);
     }
