@@ -26,12 +26,12 @@ const Playlist = () => {
       refetchOnMountOrArgChange: true,
     },
   );
-  const { userInfo } = useAppSelector((state) => state.user);
+  const { userInfo, isLoggedIn } = useAppSelector((state) => state.user);
   const { data: currentUserInfo } = useGetUserInfoByIdQuery(userId);
   return (
     <div className="bg-black w-full h-full flex flex-col p-8">
       <div className="flex w-full">
-        {userInfo && userInfo.userId === currentUserInfo.userId && (
+        {isLoggedIn && userInfo?.userId === currentUserInfo.userId && (
           <button
             className="text-red-300 bold ml-auto"
             onClick={async () => {

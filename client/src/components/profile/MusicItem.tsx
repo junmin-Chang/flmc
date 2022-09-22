@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-import { useAppDispatch } from '../../store/hook';
 import { ProfileMusicResponseDto } from '../../typings/music';
 
 const MusicItem = ({
@@ -14,28 +12,27 @@ const MusicItem = ({
   onChangeCheck: (id: string) => void;
 }) => {
   return (
-    <div className="w-full flex flex-row gap-4 items-center">
-      <div className="w-fit h-fit">
-        <img src={image} className="max-w-none w-[50px] h-[50px]" />
-      </div>
-      <div className="flex flex-col">
-        <p className="text-sm text-white font-black">{title}</p>
-        <p className="text-white text-sm">{singer}</p>
-      </div>
+    <div>
       {edit && (
-        <div className="ml-auto">
-          <input
-            onChange={() => onChangeCheck(id)}
-            id="green-checkbox"
-            type="checkbox"
-            className="w-8 h-8 text-green-600 bg-green-100 rounded border-gray-300 focus:ring-green-500 focus:ring-2"
-          />
-          <label
-            htmlFor="green-checkbox"
-            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          />
-        </div>
+        <input
+          onChange={() => onChangeCheck(id)}
+          id={id}
+          type="checkbox"
+          className="hidden peer"
+        />
       )}
+      <label
+        htmlFor={id}
+        className="w-full flex flex-row gap-4 items-center peer-checked:border peer-checked:border-green-600"
+      >
+        <div className="w-fit h-fit">
+          <img src={image} className="max-w-none w-[50px] h-[50px]" />
+        </div>
+        <div className="flex flex-col">
+          <p className="text-sm text-white font-black">{title}</p>
+          <p className="text-white text-sm">{singer}</p>
+        </div>
+      </label>
     </div>
   );
 };

@@ -26,12 +26,15 @@ const MusicList = ({ songs }: { songs: ProfileMusicResponseDto[] }) => {
         {songs.length !== 0 && (
           <p
             className="text-green-300 text-sm max-w-[100px]"
-            onClick={() => setEdit(!edit)}
+            onClick={() => {
+              setEdit(!edit);
+              setSongsToDelete([]);
+            }}
           >
             편집
           </p>
         )}
-        {songsToDelete.length !== 0 && (
+        {songsToDelete.length !== 0 && edit && (
           <span
             className="text-red-300 text-sm max-w-[100px]"
             onClick={async () => {
