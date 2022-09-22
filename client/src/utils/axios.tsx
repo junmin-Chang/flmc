@@ -10,10 +10,10 @@ export const injectStore = (_store: any) => {
   store = _store;
 };
 export const axiosPublicInstance = axios.create({
-  baseURL: 'https://3000-junminchang-flmc-gy2vi9wqqpk.ws-us65.gitpod.io/',
+  baseURL: 'https://3000-junminchang-flmc-gy2vi9wqqpk.ws-us67.gitpod.io/',
 });
 export const axiosPrivateInstance = axios.create({
-  baseURL: 'https://3000-junminchang-flmc-gy2vi9wqqpk.ws-us65.gitpod.io/',
+  baseURL: 'https://3000-junminchang-flmc-gy2vi9wqqpk.ws-us67.gitpod.io/',
   headers: {
     authorization: getAuthHeader(),
   },
