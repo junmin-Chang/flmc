@@ -1,0 +1,4 @@
+ports:
+  - port: 3000-5173
+    visibility: public
+    onOpen: open-browser

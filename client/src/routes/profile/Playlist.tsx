@@ -17,7 +17,7 @@ const Playlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { playlistId }: any = location.state;
-  const { isLoading, data: songs } = useGetMusicByPlaylistQuery(
+  const { isLoading: isLoadingSong, data: songs } = useGetMusicByPlaylistQuery(
     {
       userId,
       playlistId,
@@ -26,12 +26,14 @@ const Playlist = () => {
       refetchOnMountOrArgChange: true,
     },
   );
-  const { userInfo, isLoggedIn } = useAppSelector((state) => state.user);
-  const { data: currentUserInfo } = useGetUserInfoByIdQuery(userId);
+  const { userInfo } = useAppSelector((state) => state.user);
+  const { data: currentUserInfo, isLoading: isLoadingUser } =
+    useGetUserInfoByIdQuery(userId);
+
   return (
     <div className="bg-black w-full h-full flex flex-col p-8">
       <div className="flex w-full">
-        {isLoggedIn && userInfo?.userId === currentUserInfo.userId && (
+        {!isLoadingUser && userInfo?.userId === currentUserInfo.userId && (
           <button
             className="text-red-300 bold ml-auto"
             onClick={async () => {
@@ -44,9 +46,9 @@ const Playlist = () => {
           </button>
         )}
       </div>
-      {isLoading && <SkeletonList numberToRender={3} />}
+      {isLoadingSong && <SkeletonList numberToRender={3} />}
 
-      {!isLoading &&
+      {!isLoadingSong &&
         currentUserInfo?.playlist.map((p, i) => {
           if (p.id === playlistId) return <Quote key={i} content={p.desc} />;
         })}
