@@ -31,7 +31,7 @@ const MusicList = ({ songs }: { songs: ProfileMusicResponseDto[] }) => {
               setSongsToDelete([]);
             }}
           >
-            편집
+            {edit ? '취소' : '편집'}
           </p>
         )}
         {songsToDelete.length !== 0 && edit && (
