@@ -56,7 +56,7 @@ const Playlist = () => {
         {songs && songs.length === 0 && <NotFound className="w-full" />}
       </div>
       {songs && <MusicList songs={songs} />}
-      {currentUserInfo?.userId === userId && songs.length !== 10 && (
+      {currentUserInfo?.userId === userId && songs && songs.length !== 10 && (
         <Link className="m-auto mt-0" to="/music/add">
           <svg
             xmlns="http://www.w3.org/2000/svg"
