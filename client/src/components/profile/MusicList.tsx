@@ -1,12 +1,15 @@
 import { useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import { deleteMusic } from '../../features/music/musicSlice';
 import { musicApi } from '../../services/music/musicService';
-import { useAppDispatch } from '../../store/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { ProfileMusicResponseDto } from '../../typings/music';
 import MusicItem from './MusicItem';
 
 const MusicList = ({ songs }: { songs: ProfileMusicResponseDto[] }) => {
   const [edit, setEdit] = useState(false);
+  const { userId } = useParams();
+  const { userInfo } = useAppSelector((state) => state.user);
   const [songsToDelete, setSongsToDelete] = useState<string[]>([]);
   const dispatch = useAppDispatch();
   const onChangeCheck = useCallback(
@@ -23,7 +26,7 @@ const MusicList = ({ songs }: { songs: ProfileMusicResponseDto[] }) => {
   return (
     <div className="w-full flex flex-col gap-4 p-8">
       <div className="flex flex-row pb-4 justify-between">
-        {songs.length !== 0 && (
+        {songs.length !== 0 && userInfo?.userId === userId && (
           <p
             className="text-green-300 text-sm max-w-[100px]"
             onClick={() => {

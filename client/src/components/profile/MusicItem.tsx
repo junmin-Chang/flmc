@@ -23,7 +23,7 @@ const MusicItem = ({
       )}
       <label
         htmlFor={id}
-        className="w-full flex flex-row gap-4 items-center peer-checked:border peer-checked:border-green-600"
+        className="w-full p-2 flex flex-row gap-4 items-center peer-checked:border peer-checked:border-green-600"
       >
         <div className="w-fit h-fit">
           <img src={image} className="max-w-none w-[50px] h-[50px]" />
