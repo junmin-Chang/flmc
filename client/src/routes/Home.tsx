@@ -2,7 +2,7 @@ import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 const Home = () => {
   return (
     <Parallax pages={2}>
-      <ParallaxLayer offset={0} speed={2.5} className="flex flex-col">
+      <ParallaxLayer offset={0} speed={0.5} className="flex flex-col">
         <div className="w-full h-full flex flex-col p-8 bg-profile items-center justify-center gap-2">
           <p className="text-gray-200 text-3xl font-black">Murofile</p>
           <p className="text-gray-300 underline decoration-green-500">
@@ -27,7 +27,7 @@ const Home = () => {
 
       <ParallaxLayer
         offset={1}
-        speed={1}
+        speed={0.5}
         className="flex items-center justify-center"
       >
         <div className="w-full bg-profile flex gap-4 items-center p-8 flex-wrap">
