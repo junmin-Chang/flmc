@@ -49,7 +49,6 @@ const AddMusic = () => {
                   singer,
                   image,
                   songId,
-                  playlistName,
                   playlistId,
                 }),
               );
