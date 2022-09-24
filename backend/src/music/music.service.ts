@@ -49,8 +49,20 @@ export class MusicService {
         userId: user.userId,
       },
     });
+    const songsUserHave = await this.prismaServices.song.findMany({
+      where: {
+        userId: user.userId,
+        playlistId,
+      },
+    });
     if (isExists) {
       throw new HttpException('이미 등록된 노래입니다', HttpStatus.BAD_REQUEST);
+    }
+    if (songsUserHave.length === 10) {
+      throw new HttpException(
+        '최대 등록 개수를 넘어섰습니다.',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const result = await this.prismaServices.song.create({
