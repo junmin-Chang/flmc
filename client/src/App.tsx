@@ -23,7 +23,7 @@ function App() {
           <Route path="register" element={<Register />} />
         </Route>
         <Route path="/profile/:userId" element={<Profile />}>
-          <Route path=":playlist" element={<Playlist />} />
+          <Route path=":playlistId" element={<Playlist />} />
         </Route>
         <Route path="/music/add" element={<MusicSearch />} />
       </Routes>

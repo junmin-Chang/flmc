@@ -13,10 +13,10 @@ import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const Playlist = () => {
   const dispatch = useAppDispatch();
-  const { userId } = useParams();
+  const { userId, playlistId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { playlistId }: any = location.state;
+
   const { isLoading: isLoadingSong, data: songs } = useGetMusicByPlaylistQuery(
     {
       userId,
