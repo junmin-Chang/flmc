@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../features/user/userSlice';
 import { useAppDispatch } from '../../store/hook';
 import { LoginDto } from '../../typings/auth';
+import { LoginSchema } from '../../validation/auth';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -14,6 +15,7 @@ const Login = () => {
       userId: '',
       password: '',
     },
+    validationSchema: LoginSchema,
     onSubmit: (values: LoginDto) => {
       setLoading(true);
       dispatch(login({ ...values }))
@@ -43,6 +45,9 @@ const Login = () => {
               placeholder="아이디"
               className="w-full h-[40px] px-4 bg-black rounded-md"
             />
+            {formik.errors.userId && (
+              <label className="text-red-300">아이디를 입력해주세요</label>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="text-white font-bold">
@@ -56,6 +61,9 @@ const Login = () => {
               placeholder="패스워드"
               className="w-full h-[40px] px-4 bg-black rounded-md"
             />
+            {formik.errors.password && (
+              <label className="text-red-300">패스워드를 입력해주세요</label>
+            )}
           </div>
           <div className="flex flex-row gap-4">
             <p className="text-gray-600">회원이 아니신가요?</p>

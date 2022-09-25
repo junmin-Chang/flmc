@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { register } from '../../features/user/userSlice';
 import { useAppDispatch } from '../../store/hook';
 import { RegisterDto } from '../../typings/auth';
+import { RegisterSchema } from '../../validation/auth';
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ const Register = () => {
       userId: '',
       password: '',
     },
+    validationSchema: RegisterSchema,
     onSubmit: (values: RegisterDto) => {
       setLoading(true);
       dispatch(
@@ -48,6 +50,9 @@ const Register = () => {
               placeholder="ex) 음잘알123"
               className="w-full h-[40px] px-4 text-white bg-black rounded-md"
             />
+            {formik.errors.username && (
+              <label className="text-red-300">{formik.errors.username}</label>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="userId" className="text-white font-bold">
@@ -60,6 +65,9 @@ const Register = () => {
               placeholder="아이디"
               className="w-full h-[40px] px-4 text-white bg-black rounded-md"
             />
+            {formik.errors.userId && (
+              <label className="text-red-300">{formik.errors.userId}</label>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="text-white font-bold">
@@ -73,6 +81,9 @@ const Register = () => {
               placeholder="패스워드"
               className="w-full h-[40px] px-4 text-white bg-black rounded-md"
             />
+            {formik.errors.password && (
+              <label className="text-red-300">{formik.errors.password}</label>
+            )}
           </div>
           <button
             type="submit"
