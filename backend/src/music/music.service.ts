@@ -89,6 +89,9 @@ export class MusicService {
         userId,
         playlistId,
       },
+      include: {
+        playlist: true,
+      },
     });
     return songsToGet;
   }
