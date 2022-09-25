@@ -47,6 +47,15 @@ export class UserService {
   }
 
   async addPlaylist(name: string, desc: string, user) {
+    const playlistsUserHave = await this.prismaServices.playlist.findMany({
+      where: {
+        userId: user.userId,
+      },
+    });
+
+    if (playlistsUserHave.length === 5) {
+      throw new HttpException('최대 플레이리스트', HttpStatus.BAD_REQUEST);
+    }
     const result = await this.prismaServices.playlist.create({
       data: {
         name,
