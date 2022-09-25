@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PasswordService } from '../provider/password.service';
 import { PrismaService } from '../provider/prisma.service';
+import { AddPlaylistDto } from './dto/add-playlist.dto';
 
 @Injectable()
 export class UserService {
@@ -73,6 +74,20 @@ export class UserService {
       where: {
         id: playlistId,
         userId: user.userId,
+      },
+    });
+
+    return result;
+  }
+
+  async updatePlaylistDesc(playlistId: string, body: AddPlaylistDto, user) {
+    const result = await this.prismaServices.playlist.updateMany({
+      where: {
+        userId: user.userId,
+        id: playlistId,
+      },
+      data: {
+        ...body,
       },
     });
 

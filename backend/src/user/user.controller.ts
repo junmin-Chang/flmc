@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -35,5 +36,15 @@ export class UserController {
     @AuthRequired() user: User,
   ) {
     return await this.userServices.deletePlaylist(playlistId, user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('playlist/:playlistId')
+  async updatePlaylistDesc(
+    @Param('playlistId') playlistId: string,
+    @Body() body: AddPlaylistDto,
+    @AuthRequired() user: User,
+  ) {
+    return await this.userServices.updatePlaylistDesc(playlistId, body, user);
   }
 }
