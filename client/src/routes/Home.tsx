@@ -1,13 +1,47 @@
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+import { useSpring, animated } from 'react-spring';
 const Home = () => {
+  const logoStyle = useSpring({
+    from: { transform: 'translateY(0%)' },
+    to: {
+      transform: 'translateY(-100%)',
+    },
+    config: { duration: 1500 },
+  });
+  const opacityStyle = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 1500 },
+  });
+  const colorStyle = useSpring({
+    from: { color: 'white' },
+    to: { color: '#22c55e' },
+    config: {
+      duration: 1500,
+    },
+  });
   return (
     <Parallax pages={2}>
       <ParallaxLayer offset={0} speed={0.5} className="flex flex-col">
         <div className="w-full h-full flex flex-col p-8 bg-profile items-center justify-center gap-2">
-          <p className="text-gray-200 text-3xl font-black">Murofile</p>
-          <p className="text-gray-300 underline decoration-green-500">
+          <animated.p
+            style={logoStyle}
+            className="text-gray-200 text-3xl font-black"
+          >
+            Murofile
+          </animated.p>
+          <animated.p
+            style={opacityStyle}
+            className="text-gray-300 underline decoration-green-500 text-center"
+          >
             나 자신을 표현할 수 있는 플레이리스트를 만들어보세요.
-          </p>
+          </animated.p>
+          <animated.p
+            style={colorStyle}
+            className="text-gray-300 text-center font-bold"
+          >
+            뮤로필을 통해 플레이리스트로 나를 소개할 수 있습니다.
+          </animated.p>
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
