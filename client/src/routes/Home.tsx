@@ -26,7 +26,7 @@ const Home = () => {
         <div className="w-full h-full flex flex-col p-8 bg-profile items-center justify-center gap-2">
           <animated.p
             style={logoStyle}
-            className="text-gray-200 text-3xl font-black"
+            className="text-green-300 text-3xl font-fredokaOne"
           >
             Murofile
           </animated.p>

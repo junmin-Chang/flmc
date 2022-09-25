@@ -7,6 +7,9 @@ module.exports = {
         auth: "url('./assets/image/bg-auth.svg')",
         profile: "url('./assets/image/bg-profile.svg')",
       },
+      fontFamily: {
+        fredokaOne: ['FredokaOne', 'cursive'],
+      },
     },
   },
   plugins: [],

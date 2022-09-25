@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../features/user/userSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 
@@ -9,6 +9,9 @@ const Nav = () => {
 
   return (
     <div className="w-full h-[60px] flex flex-row p-4 bg-transparent">
+      <Link to="/" className="font-fredokaOne text-green-300 text-xl">
+        Murofile
+      </Link>
       {isLoggedIn ? (
         <div className="flex flex-row gap-4 ml-auto">
           <svg
