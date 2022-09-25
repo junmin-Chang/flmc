@@ -1,7 +1,8 @@
-import { IsString } from 'class-validator';
+import { IsString, Max } from 'class-validator';
 
 export class RegisterDto {
   @IsString()
+  @Max(8)
   username: string;
 
   @IsString()

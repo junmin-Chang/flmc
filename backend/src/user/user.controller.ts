@@ -10,6 +10,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import AuthRequired from '../common/decorators/auth.decorator';
+import { AddPlaylistDto } from './dto/add-playlist.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -23,10 +24,7 @@ export class UserController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('playlist')
-  async addPlaylist(
-    @Body() body: { name: string; desc: string },
-    @AuthRequired() user: User,
-  ) {
+  async addPlaylist(@Body() body: AddPlaylistDto, @AuthRequired() user: User) {
     return await this.userServices.addPlaylist(body.name, body.desc, user);
   }
 
