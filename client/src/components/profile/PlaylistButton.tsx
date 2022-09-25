@@ -1,6 +1,6 @@
 import { showAddPlaylist } from '../../features/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const PlaylistButton = ({
   playlist,
   userId,
@@ -10,16 +10,20 @@ const PlaylistButton = ({
 }) => {
   const { userInfo: loggedInUserId } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const activeStyle = {
+    backgroundColor: 'green',
+  };
   return (
     <div className="w-full px-4 py-2 flex flex-row gap-2">
       {playlist?.slice(0, 3).map((p, i) => (
-        <Link
+        <NavLink
+          style={({ isActive }) => (isActive ? activeStyle : null)}
           to={`/profile/${userId}/${p.id}`}
           key={i}
           className="p-2 bg-green-400 text-white rounded-md font-black"
         >
           {p.name}
-        </Link>
+        </NavLink>
       ))}
       {userId === loggedInUserId?.userId && (
         <button
