@@ -2,10 +2,16 @@ import { useFormik } from 'formik';
 import { ChangeEvent, useCallback } from 'react';
 import { hideAddPlaylist } from '../../features/modal/modalSlice';
 import { addPlaylist } from '../../features/user/userSlice';
-import { userApi } from '../../services/user/userService';
-import { useAppDispatch } from '../../store/hook';
+import {
+  userApi,
+  useUpdatePlaylistMutation,
+} from '../../services/user/userService';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const Modal = () => {
+  const { stateToUpdate } = useAppSelector((state) => state.modal);
+  const [updatePost, result] = useUpdatePlaylistMutation();
+
   const dispatch = useAppDispatch();
   const onClose = useCallback(
     (e: ChangeEvent<any>) => {
@@ -17,16 +23,25 @@ const Modal = () => {
   );
   const formik = useFormik({
     initialValues: {
-      name: '',
-      desc: '',
+      name: stateToUpdate ? stateToUpdate.name : '',
+      desc: stateToUpdate ? stateToUpdate.desc : '',
     },
     onSubmit: async (values) => {
-      await dispatch(
-        addPlaylist({
-          ...values,
-        }),
-      );
       dispatch(hideAddPlaylist());
+      if (stateToUpdate) {
+        updatePost({
+          playlistId: stateToUpdate.id,
+          data: {
+            ...values,
+          },
+        });
+      } else {
+        await dispatch(
+          addPlaylist({
+            ...values,
+          }),
+        );
+      }
       dispatch(userApi.util.invalidateTags(['User']));
     },
   });
@@ -63,7 +78,7 @@ const Modal = () => {
             type="submit"
             className="p-2 mt-8 rounded-md bg-green-400 text-white font-black"
           >
-            생성
+            {stateToUpdate ? '수정' : '생성'}
           </button>
         </form>
       </div>

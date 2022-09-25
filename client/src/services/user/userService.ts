@@ -50,10 +50,19 @@ export const userApi = createApi({
       query: (userId: string) => `/user/${userId}`,
       providesTags: ['User'],
     }),
+    updatePlaylist: builder.mutation({
+      queryFn: ({ playlistId, data }) =>
+        axiosPrivateInstance({
+          url: `/user/playlist/${playlistId}`,
+          method: 'PATCH',
+          data,
+        }),
+      invalidatesTags: ['User'],
+    }),
   }),
 });
 
-export const { useGetUserInfoByIdQuery } = userApi;
+export const { useGetUserInfoByIdQuery, useUpdatePlaylistMutation } = userApi;
 
 const userService = {
   register,

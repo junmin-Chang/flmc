@@ -1,53 +1,46 @@
-import { showAddPlaylist } from '../../features/modal/modalSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
+import { showUpdatePlaylist } from '../../features/modal/modalSlice';
+import { useAppDispatch } from '../../store/hook';
+import { Playlist } from '../../typings/auth';
 const PlaylistButton = ({
   playlist,
-  userId,
+  currentUserId,
 }: {
-  userId: string | undefined;
-  playlist: { id: string; name: string; desc: string }[] | undefined;
+  currentUserId: string | undefined;
+  playlist: Playlist | undefined;
 }) => {
-  const { userInfo: loggedInUserId } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const { playlistId, userId } = useParams();
   const activeStyle = {
-    backgroundColor: 'green',
+    backgroundColor: '#30925c',
   };
   return (
-    <div className="w-full px-4 py-2 flex flex-row gap-2">
-      {playlist?.slice(0, 3).map((p, i) => (
-        <NavLink
-          style={({ isActive }) => (isActive ? activeStyle : null)}
-          to={`/profile/${userId}/${p.id}`}
-          key={i}
-          className="p-2 bg-green-400 text-white rounded-md font-black"
-        >
-          {p.name}
-        </NavLink>
-      ))}
-      {userId === loggedInUserId?.userId && (
+    <div className="relative">
+      {currentUserId === userId && playlistId === playlist.id && (
         <button
-          className="p-2 bg-green-400 text-white rounded-md"
           onClick={() => {
-            dispatch(showAddPlaylist());
+            dispatch(showUpdatePlaylist(playlist));
           }}
+          className="absolute left-0 bottom-4 p-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 text-white"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-5 h-5 text-white"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
+            <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+            <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
           </svg>
         </button>
       )}
+      <NavLink
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+        to={`/profile/${userId}/${playlist.id}`}
+        className="p-2 bg-green-400 text-white rounded-md font-black"
+      >
+        {playlist.name}
+      </NavLink>
     </div>
   );
 };

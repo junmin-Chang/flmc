@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import SkeletonList from '../../components/common/SkeletonList';
 import MusicList from '../../components/profile/MusicList';
 import NotFound from '../../components/profile/NotFound';
@@ -14,7 +14,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hook';
 const Playlist = () => {
   const dispatch = useAppDispatch();
   const { userId, playlistId } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const { isLoading: isLoadingSong, data: songs } = useGetMusicByPlaylistQuery(
@@ -26,6 +25,7 @@ const Playlist = () => {
       refetchOnMountOrArgChange: true,
     },
   );
+
   const { userInfo } = useAppSelector((state) => state.user);
   const { data: currentUserInfo, isLoading: isLoadingUser } =
     useGetUserInfoByIdQuery(userId);
@@ -34,16 +34,18 @@ const Playlist = () => {
     <div className="bg-black w-full h-full flex flex-col p-8">
       <div className="flex w-full">
         {!isLoadingUser && userInfo?.userId === currentUserInfo.userId && (
-          <button
-            className="text-red-300 bold ml-auto"
-            onClick={async () => {
-              await dispatch(deletePlaylist(playlistId));
-              dispatch(userApi.util.invalidateTags(['User']));
-              navigate(`/profile/${userId}`);
-            }}
-          >
-            플레이리스트 삭제
-          </button>
+          <div className="flex w-full flex-row justify-between pb-4">
+            <button
+              className="text-red-300 bold ml-auto"
+              onClick={async () => {
+                await dispatch(deletePlaylist(playlistId));
+                dispatch(userApi.util.invalidateTags(['User']));
+                navigate(`/profile/${userId}`);
+              }}
+            >
+              삭제
+            </button>
+          </div>
         )}
       </div>
       {isLoadingSong && <SkeletonList numberToRender={3} />}
