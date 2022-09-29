@@ -70,6 +70,9 @@ export class AuthService {
 
       const user = await this.prismaServices.user.findUnique({
         where: { userId },
+        include: {
+          playlist: true,
+        },
       });
       delete user.password;
       return {
