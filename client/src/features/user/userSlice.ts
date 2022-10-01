@@ -78,8 +78,31 @@ export const deletePlaylist = createAsyncThunk(
     try {
       const response = await userService.deletePlaylist(playlistId);
       if (response) {
-        return response;
+        return playlistId;
       }
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data.message);
+    }
+  },
+);
+
+export const updatePlaylist = createAsyncThunk(
+  'music/playlist/update',
+  async (
+    {
+      playlistId,
+      name,
+      desc,
+    }: { playlistId: string; name: string; desc: string },
+    thunkApi,
+  ) => {
+    try {
+      const response = await userService.updatePlaylist({
+        playlistId,
+        name,
+        desc,
+      });
+      return response;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data.message);
     }
@@ -131,7 +154,23 @@ const userSlice = createSlice({
       state.userInfo!.playlist = [...state.userInfo!.playlist, action.payload];
     });
     builder.addCase(deletePlaylist.fulfilled, (state, action) => {
-      state.userInfo.playlist.filter((p) => p.id !== action.payload.id);
+      state.userInfo.playlist = state.userInfo.playlist.filter(
+        (p) => p.id !== action.payload,
+      );
+    });
+    builder.addCase(updatePlaylist.fulfilled, (state, action) => {
+      const newPlaylist = state.userInfo.playlist.map((p) => {
+        if (p.id === action.payload.playlistId) {
+          return {
+            ...p,
+            name: action.payload.name,
+            desc: action.payload.desc,
+          };
+        } else {
+          return p;
+        }
+      });
+      state.userInfo.playlist = newPlaylist;
     });
   },
 });

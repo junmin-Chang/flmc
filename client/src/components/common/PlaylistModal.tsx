@@ -1,17 +1,12 @@
 import { useFormik } from 'formik';
 import { ChangeEvent, useCallback } from 'react';
 import { hideAddPlaylist } from '../../features/modal/modalSlice';
-import { addPlaylist } from '../../features/user/userSlice';
-import {
-  userApi,
-  useUpdatePlaylistMutation,
-} from '../../services/user/userService';
+import { addPlaylist, updatePlaylist } from '../../features/user/userSlice';
+import { userApi } from '../../services/user/userService';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 const Modal = () => {
   const { stateToUpdate } = useAppSelector((state) => state.modal);
-  const [updatePost, result] = useUpdatePlaylistMutation();
-
   const dispatch = useAppDispatch();
   const onClose = useCallback(
     (e: ChangeEvent<any>) => {
@@ -29,12 +24,12 @@ const Modal = () => {
     onSubmit: async (values) => {
       dispatch(hideAddPlaylist());
       if (stateToUpdate) {
-        updatePost({
-          playlistId: stateToUpdate.id,
-          data: {
+        await dispatch(
+          updatePlaylist({
+            playlistId: stateToUpdate.id,
             ...values,
-          },
-        });
+          }),
+        );
       } else {
         await dispatch(
           addPlaylist({

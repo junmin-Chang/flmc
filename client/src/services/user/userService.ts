@@ -41,6 +41,23 @@ const deletePlaylist = async (playlistId: string) => {
   );
   return response.data;
 };
+
+const updatePlaylist = async ({ playlistId, name, desc }) => {
+  const response = await axiosPrivateInstance.patch(
+    `/user/playlist/${playlistId}`,
+    {
+      name,
+      desc,
+    },
+  );
+  if (response) {
+    return {
+      name,
+      desc,
+      playlistId,
+    };
+  }
+};
 export const userApi = createApi({
   reducerPath: 'userApi/search',
   tagTypes: ['User'],
@@ -50,19 +67,10 @@ export const userApi = createApi({
       query: (userId: string) => `/user/${userId}`,
       providesTags: ['User'],
     }),
-    updatePlaylist: builder.mutation({
-      queryFn: ({ playlistId, data }) =>
-        axiosPrivateInstance({
-          url: `/user/playlist/${playlistId}`,
-          method: 'PATCH',
-          data,
-        }),
-      invalidatesTags: ['User'],
-    }),
   }),
 });
 
-export const { useGetUserInfoByIdQuery, useUpdatePlaylistMutation } = userApi;
+export const { useGetUserInfoByIdQuery } = userApi;
 
 const userService = {
   register,
@@ -71,6 +79,7 @@ const userService = {
   refresh,
   addPlaylist,
   deletePlaylist,
+  updatePlaylist,
 };
 
 export default userService;
