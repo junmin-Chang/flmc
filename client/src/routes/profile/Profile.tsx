@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hook';
 const Profile = () => {
   const dispatch = useAppDispatch();
   const { userId } = useParams();
-  const { userInfo: loggedInUserId } = useAppSelector((state) => state.user);
+  const { userInfo: loggedInUser } = useAppSelector((state) => state.user);
   const { isLoading, data: userInfo } = useGetUserInfoByIdQuery(
     userId as string,
     {
@@ -26,12 +26,12 @@ const Profile = () => {
         {!isLoading &&
           userInfo?.playlist.map((p) => (
             <PlaylistButton
-              currentUserId={loggedInUserId?.userId}
+              currentUserId={loggedInUser?.userId}
               playlist={p}
               key={p.id}
             />
           ))}
-        {!isLoading && userId === loggedInUserId?.userId && (
+        {!isLoading && userId === loggedInUser?.userId && (
           <button
             onClick={() => {
               dispatch(showAddPlaylist());
