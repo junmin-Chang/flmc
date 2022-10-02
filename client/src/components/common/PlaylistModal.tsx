@@ -26,6 +26,7 @@ const Modal = () => {
       if (stateToUpdate) {
         await dispatch(
           updatePlaylist({
+            original: stateToUpdate,
             playlistId: stateToUpdate.id,
             ...values,
           }),

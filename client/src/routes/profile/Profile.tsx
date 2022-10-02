@@ -21,16 +21,25 @@ const Profile = () => {
   return (
     <div className="w-full h-full flex flex-col bg-profile">
       <h2 className="text-white text-4xl font-black p-8">{userId} 님.</h2>
-      {isLoading && <Skeleton />}
+      {isLoading && (!loggedInUser || loggedInUser.userId !== userId) && (
+        <Skeleton />
+      )}
       <div className="w-full px-4 py-2 flex flex-row gap-2 items-center">
-        {!isLoading &&
-          userInfo?.playlist.map((p) => (
-            <PlaylistButton
-              currentUserId={loggedInUser?.userId}
-              playlist={p}
-              key={p.id}
-            />
-          ))}
+        {loggedInUser && loggedInUser.userId === userId
+          ? loggedInUser.playlist.map((p) => (
+              <PlaylistButton
+                currentUserId={loggedInUser?.userId}
+                playlist={p}
+                key={p.id}
+              />
+            ))
+          : userInfo?.playlist.map((p) => (
+              <PlaylistButton
+                currentUserId={loggedInUser?.userId}
+                playlist={p}
+                key={p.id}
+              />
+            ))}
         {!isLoading && userId === loggedInUser?.userId && (
           <button
             onClick={() => {

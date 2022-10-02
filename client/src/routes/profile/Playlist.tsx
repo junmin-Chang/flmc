@@ -15,7 +15,6 @@ const Playlist = () => {
   const dispatch = useAppDispatch();
   const { userId, playlistId } = useParams();
   const navigate = useNavigate();
-
   const { isLoading: isLoadingSong, data: songs } = useGetMusicByPlaylistQuery(
     {
       userId,
@@ -26,19 +25,26 @@ const Playlist = () => {
     },
   );
 
-  const { userInfo } = useAppSelector((state) => state.user);
+  const { userInfo: loggedInUser } = useAppSelector((state) => state.user);
   const { data: currentUserInfo, isLoading: isLoadingUser } =
     useGetUserInfoByIdQuery(userId);
 
   return (
     <div className="bg-black w-full h-full flex flex-col p-8">
       <div className="flex w-full">
-        {!isLoadingUser && userInfo?.userId === currentUserInfo.userId && (
+        {!isLoadingUser && loggedInUser?.userId === currentUserInfo.userId && (
           <div className="flex w-full flex-row justify-between pb-4">
             <button
               className="text-red-300 bold ml-auto"
               onClick={async () => {
-                await dispatch(deletePlaylist(playlistId));
+                await dispatch(
+                  deletePlaylist({
+                    playlistId,
+                    original: loggedInUser.playlist.find(
+                      (p) => p.id === playlistId,
+                    ),
+                  }),
+                );
                 dispatch(userApi.util.invalidateTags(['User']));
                 navigate(`/profile/${userId}`);
               }}
@@ -51,6 +57,13 @@ const Playlist = () => {
       {isLoadingSong && <SkeletonList numberToRender={3} />}
 
       {!isLoadingSong &&
+        loggedInUser &&
+        loggedInUser.userId === userId &&
+        loggedInUser.playlist.map((p, i) => {
+          if (p.id === playlistId) return <Quote key={i} content={p.desc} />;
+        })}
+      {!isLoadingSong &&
+        (!loggedInUser || loggedInUser.userId !== userId) &&
         currentUserInfo?.playlist.map((p, i) => {
           if (p.id === playlistId) return <Quote key={i} content={p.desc} />;
         })}

@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, original } from '@reduxjs/toolkit';
 import { build } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/cacheLifecycle';
 import userService from '../../services/user/userService';
 import { RootState } from '../../store/store';
-import { LoginDto, RegisterDto, User, UserInfo } from '../../typings/auth';
+import { LoginDto, Playlist, RegisterDto, User } from '../../typings/auth';
 
 export const register = createAsyncThunk(
   'user/register',
@@ -74,7 +74,10 @@ export const addPlaylist = createAsyncThunk(
 
 export const deletePlaylist = createAsyncThunk(
   'music/playlist/delete',
-  async (playlistId: string, thunkApi) => {
+  async (
+    { playlistId, original }: { playlistId: string; original: Playlist },
+    thunkApi,
+  ) => {
     try {
       const response = await userService.deletePlaylist(playlistId);
       if (response) {
@@ -90,10 +93,11 @@ export const updatePlaylist = createAsyncThunk(
   'music/playlist/update',
   async (
     {
+      original,
       playlistId,
       name,
       desc,
-    }: { playlistId: string; name: string; desc: string },
+    }: { original: Playlist; playlistId: string; name: string; desc: string },
     thunkApi,
   ) => {
     try {
@@ -150,21 +154,37 @@ const userSlice = createSlice({
       state.refreshToken = action.payload?.refreshToken;
       state.userInfo = action.payload?.userInfo;
     });
+
     builder.addCase(addPlaylist.fulfilled, (state, action) => {
       state.userInfo!.playlist = [...state.userInfo!.playlist, action.payload];
     });
-    builder.addCase(deletePlaylist.fulfilled, (state, action) => {
+    builder.addCase(deletePlaylist.pending, (state, action) => {
       state.userInfo.playlist = state.userInfo.playlist.filter(
-        (p) => p.id !== action.payload,
+        (p) => p.id !== action.meta.arg.playlistId,
       );
     });
-    builder.addCase(updatePlaylist.fulfilled, (state, action) => {
+    builder.addCase(deletePlaylist.rejected, (state, action) => {
+      state.userInfo.playlist.push(action.meta.arg.original);
+    });
+    builder.addCase(updatePlaylist.pending, (state, action) => {
       const newPlaylist = state.userInfo.playlist.map((p) => {
-        if (p.id === action.payload.playlistId) {
+        if (p.id === action.meta.arg.playlistId) {
           return {
             ...p,
-            name: action.payload.name,
-            desc: action.payload.desc,
+            name: action.meta.arg.name,
+            desc: action.meta.arg.desc,
+          };
+        } else {
+          return p;
+        }
+      });
+      state.userInfo.playlist = newPlaylist;
+    });
+    builder.addCase(updatePlaylist.rejected, (state, action) => {
+      const newPlaylist = state.userInfo.playlist.map((p) => {
+        if (p.id === action.meta.arg.playlistId) {
+          return {
+            ...action.meta.arg.original,
           };
         } else {
           return p;
