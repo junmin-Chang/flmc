@@ -39,8 +39,7 @@ const Playlist = () => {
               onClick={async () => {
                 await dispatch(
                   deletePlaylist({
-                    playlistId,
-                    original: loggedInUser.playlist.find(
+                    playlistToUpdate: loggedInUser.playlist.find(
                       (p) => p.id === playlistId,
                     ),
                   }),

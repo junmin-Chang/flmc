@@ -74,14 +74,11 @@ export const addPlaylist = createAsyncThunk(
 
 export const deletePlaylist = createAsyncThunk(
   'music/playlist/delete',
-  async (
-    { playlistId, original }: { playlistId: string; original: Playlist },
-    thunkApi,
-  ) => {
+  async ({ playlistToUpdate }: { playlistToUpdate: Playlist }, thunkApi) => {
     try {
-      const response = await userService.deletePlaylist(playlistId);
+      const response = await userService.deletePlaylist(playlistToUpdate.id);
       if (response) {
-        return playlistId;
+        return playlistToUpdate.id;
       }
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data.message);
@@ -93,16 +90,15 @@ export const updatePlaylist = createAsyncThunk(
   'music/playlist/update',
   async (
     {
-      original,
-      playlistId,
+      playlistToUpdate,
       name,
       desc,
-    }: { original: Playlist; playlistId: string; name: string; desc: string },
+    }: { playlistToUpdate: Playlist; name: string; desc: string },
     thunkApi,
   ) => {
     try {
       const response = await userService.updatePlaylist({
-        playlistId,
+        playlistId: playlistToUpdate.id,
         name,
         desc,
       });
@@ -160,15 +156,15 @@ const userSlice = createSlice({
     });
     builder.addCase(deletePlaylist.pending, (state, action) => {
       state.userInfo.playlist = state.userInfo.playlist.filter(
-        (p) => p.id !== action.meta.arg.playlistId,
+        (p) => p.id !== action.meta.arg.playlistToUpdate.id,
       );
     });
     builder.addCase(deletePlaylist.rejected, (state, action) => {
-      state.userInfo.playlist.push(action.meta.arg.original);
+      state.userInfo.playlist.push(action.meta.arg.playlistToUpdate);
     });
     builder.addCase(updatePlaylist.pending, (state, action) => {
       const newPlaylist = state.userInfo.playlist.map((p) => {
-        if (p.id === action.meta.arg.playlistId) {
+        if (p.id === action.meta.arg.playlistToUpdate.id) {
           return {
             ...p,
             name: action.meta.arg.name,
@@ -182,9 +178,9 @@ const userSlice = createSlice({
     });
     builder.addCase(updatePlaylist.rejected, (state, action) => {
       const newPlaylist = state.userInfo.playlist.map((p) => {
-        if (p.id === action.meta.arg.playlistId) {
+        if (p.id === action.meta.arg.playlistToUpdate.id) {
           return {
-            ...action.meta.arg.original,
+            ...action.meta.arg.playlistToUpdate,
           };
         } else {
           return p;
