@@ -24,7 +24,7 @@ const AddMusic = () => {
     <div
       onClick={onClose}
       id="modal-container"
-      className="w-full h-full backdrop-blur-md flex items-center justify-center absolute top-0 left-0"
+      className="w-full h-full backdrop-blur-md flex items-center justify-center fixed top-0 left-0"
     >
       <div className="relative w-4/5 bg-neutral-900 rounded-md flex flex-col p-4 z-50 min-h-[200px]">
         <h2 className="text-2xl text-white font-black">음악 추가</h2>

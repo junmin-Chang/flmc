@@ -24,7 +24,7 @@ const ClipboardModal = () => {
     <div
       id="modal-container"
       onClick={onClose}
-      className="w-full h-full backdrop-blur-md flex items-center justify-center absolute top-0 left-0"
+      className="w-full h-full fixed backdrop-blur-md flex items-center justify-center top-0 left-0"
     >
       <div className="relative w-4/5 bg-neutral-900 rounded-md flex flex-col items-center p-4 z-50 gap-4">
         <h2 className="text-2xl text-white font-black">공유하기</h2>
