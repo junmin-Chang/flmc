@@ -4,6 +4,7 @@ import { hideModal } from '../../features/modal/modalSlice';
 import { addPlaylist, updatePlaylist } from '../../features/user/userSlice';
 import { userApi } from '../../services/user/userService';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
+import { PlaylistSchema } from '../../validation/playlist';
 
 const Modal = () => {
   const { stateToUpdate } = useAppSelector((state) => state.modal);
@@ -18,9 +19,10 @@ const Modal = () => {
   );
   const formik = useFormik({
     initialValues: {
-      name: stateToUpdate ? stateToUpdate.name : '',
-      desc: stateToUpdate ? stateToUpdate.desc : '',
+      name: (stateToUpdate ? stateToUpdate.name : '') as string,
+      desc: (stateToUpdate ? stateToUpdate.desc : '') as string,
     },
+    validationSchema: PlaylistSchema,
     onSubmit: async (values) => {
       dispatch(hideModal());
       if (stateToUpdate) {
@@ -51,7 +53,11 @@ const Modal = () => {
         <form onSubmit={formik.handleSubmit} className="flex flex-col">
           <label htmlFor="playlist" className="text-white bold pt-4">
             이름
+            {formik.errors.name && (
+              <label className="text-red-300 pl-4">{formik.errors.name}</label>
+            )}
           </label>
+
           <input
             id="name"
             type="text"
@@ -62,6 +68,9 @@ const Modal = () => {
           />
           <label htmlFor="desc" className="text-white bold pt-4">
             설명
+            {formik.errors.desc && (
+              <label className="text-red-300 pl-4">{formik.errors.desc}</label>
+            )}
           </label>
           <textarea
             id="desc"
