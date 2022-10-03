@@ -15,13 +15,13 @@ const PlaylistButton = ({
     backgroundColor: '#30925c',
   };
   return (
-    <div className="relative">
+    <div className="flex items-center justify-center relative">
       {currentUserId === userId && playlistId === playlist.id && (
         <button
           onClick={() => {
             dispatch(showUpdatePlaylist(playlist));
           }}
-          className="absolute left-0 bottom-4 p-2"
+          className="absolute left-0 bottom-6 p-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -24,7 +24,7 @@ const Profile = () => {
       {isLoading && (!loggedInUser || loggedInUser.userId !== userId) && (
         <Skeleton />
       )}
-      <div className="w-full px-4 py-2 flex flex-row gap-2 items-center">
+      <div className="w-full px-4 py-2 flex flex-row flex-wrap gap-2 items-center">
         {loggedInUser && loggedInUser.userId === userId
           ? loggedInUser.playlist.map((p) => (
               <PlaylistButton
@@ -40,29 +40,31 @@ const Profile = () => {
                 key={p.id}
               />
             ))}
-        {!isLoading && userId === loggedInUser?.userId && (
-          <button
-            onClick={() => {
-              dispatch(showAddPlaylist());
-            }}
-            className="p-2 bg-green-400 text-white rounded-md"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-white"
+        {!isLoading &&
+          userId === loggedInUser?.userId &&
+          loggedInUser.playlist.length < 5 && (
+            <button
+              onClick={() => {
+                dispatch(showAddPlaylist());
+              }}
+              className="p-2 bg-green-400 text-white rounded-md"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-          </button>
-        )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+            </button>
+          )}
       </div>
 
       <Outlet />
