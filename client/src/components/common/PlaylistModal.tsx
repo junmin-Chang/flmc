@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { ChangeEvent, useCallback } from 'react';
-import { hideAddPlaylist } from '../../features/modal/modalSlice';
+import { hideModal } from '../../features/modal/modalSlice';
 import { addPlaylist, updatePlaylist } from '../../features/user/userSlice';
 import { userApi } from '../../services/user/userService';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
@@ -11,7 +11,7 @@ const Modal = () => {
   const onClose = useCallback(
     (e: ChangeEvent<any>) => {
       if (e.target.id === 'modal-container') {
-        dispatch(hideAddPlaylist());
+        dispatch(hideModal());
       }
     },
     [dispatch],
@@ -22,7 +22,7 @@ const Modal = () => {
       desc: stateToUpdate ? stateToUpdate.desc : '',
     },
     onSubmit: async (values) => {
-      dispatch(hideAddPlaylist());
+      dispatch(hideModal());
       if (stateToUpdate) {
         await dispatch(
           updatePlaylist({

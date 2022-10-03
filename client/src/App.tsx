@@ -10,6 +10,7 @@ import Modal from './components/common/PlaylistModal';
 import Playlist from './routes/profile/Playlist';
 import MusicSearch from './routes/music/MusicSearch';
 import AddMusic from './components/common/MusicModal';
+import ClipboardModal from './components/common/ClipboardModal';
 
 function App() {
   const { isOpen, mode } = useAppSelector((state) => state.modal);
@@ -29,6 +30,7 @@ function App() {
       </Routes>
       {isOpen && mode === 'playlist' && <Modal />}
       {isOpen && mode === 'music' && <AddMusic />}
+      {isOpen && mode === 'clipboard' && <ClipboardModal />}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { addMusic } from '../../features/music/musicSlice';
 import Select from 'react-select';
-import { hideAddMusic } from '../../features/modal/modalSlice';
+import { hideModal } from '../../features/modal/modalSlice';
 const AddMusic = () => {
   const { userInfo } = useAppSelector((state) => state.user);
   const { title, image, songId, singer } = useAppSelector(
@@ -15,7 +15,7 @@ const AddMusic = () => {
   const onClose = useCallback(
     (e: ChangeEvent<any>) => {
       if (e.target.id === 'modal-container') {
-        dispatch(hideAddMusic());
+        dispatch(hideModal());
       }
     },
     [dispatch],
@@ -52,7 +52,7 @@ const AddMusic = () => {
                   playlistId,
                 }),
               );
-              dispatch(hideAddMusic());
+              dispatch(hideModal());
             }}
           >
             추가

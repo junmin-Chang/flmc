@@ -3,6 +3,7 @@ import SkeletonList from '../../components/common/SkeletonList';
 import MusicList from '../../components/profile/MusicList';
 import NotFound from '../../components/profile/NotFound';
 import Quote from '../../components/profile/Quote';
+import { showClipboardModal } from '../../features/modal/modalSlice';
 import { deletePlaylist } from '../../features/user/userSlice';
 import { useGetMusicByPlaylistQuery } from '../../services/music/musicService';
 import {
@@ -34,6 +35,14 @@ const Playlist = () => {
       <div className="flex w-full">
         {!isLoadingUser && loggedInUser?.userId === currentUserInfo.userId && (
           <div className="flex w-full flex-row justify-between pb-4">
+            <button
+              className="text-green-300 bold"
+              onClick={() => {
+                dispatch(showClipboardModal());
+              }}
+            >
+              공유
+            </button>
             <button
               className="text-red-300 bold ml-auto"
               onClick={async () => {
